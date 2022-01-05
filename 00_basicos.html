@@ -87,7 +87,10 @@
         //Cadenas de Texto aka Strings
         let nombre = "Jon";
         let apellido = 'MirCha';
-        let saludo = new String("Hola Mundo");
+        let saludo = new String("Hola Mundo"); -> es una manera de declarar una cadena de texto es con su constructor o
+        sea con el objeto string. La palabra new String: la palabra reservada new es un operador, que me va permitir
+        crear un objeto nuevo de un cierto tipo de dato, en este caso como le colocamos String, me va crear una cadena
+        de texto(nadie utiliza esta forma, ya que es mas practico utilizar los " " ' ').
         let lorem = "       Lorem ipsum, dolor sit amet consectetur adipisicing elit. Est, et dolorum. Adipisci sequi, voluptates accusamus earum magnam non pariatur odit consequuntur dicta modi. Quam soluta aliquid nam ea quod dolore.      ";
 
         console.log(nombre, apellido, saludo);
@@ -95,14 +98,17 @@
           nombre.length,
           apellido.length,
           saludo.length,
-          nombre.toUpperCase(),
-          apellido.toLowerCase(),
-          lorem.includes("amet"),
-          lorem.includes("jon"),
+          nombre.toUpperCase(),     toUpperCase ->es un metodo para que todas las palabras se escriban en MAYUSCULA
+          apellido.toLowerCase(),   toLowerCase ->es un metodo para que todas las palabras se escriban en MINUSCULA
+          lorem.includes("amet"),   includes  ->es para verificar si en la variable lorem se incluye la palabra amet
+          lorem.includes("jon"),     
           lorem,
-          lorem.trim(),
-          lorem.split(" "),
-          lorem.split(",")
+          lorem.trim(),             trim  ->saca los "espacios en blanco que estan al principio y al final de lorem
+          lorem.split(" "),         
+          lorem.split(",")          split  ->convierte la cadena de texto en un arreglo(por ejemplo si entrecomillas
+          tiene un espacio en blanco va a armar el arreglo separando la cadena de texto por los espacios en blanco
+          o sea va a seperar cada vez que encuentre un espacio en blanco; en cambio si tiene la coma significa que va 
+          a seperar la cadena de texto hasta donde haya una coma)
         );
 
      */
@@ -157,20 +163,23 @@
     /* **********     Curso JavaScript: 7. Números (Numbers) - #jonmircha     ********** */
 
     /* let a = 2;
-    let b = new Number(1);
+    let b = new Number(1);  la palabra reservada new es un operador, que me va permitir crear un objeto nuevo de un cierto tipo de dato, en este caso como le colocamos Number y crea un numero.
     let c = 7.19;
     let d = "5.6";
 
     console.log(a, b);
-    console.log(c.toFixed(1));
-    console.log(c.toFixed(5));
-    console.log(parseInt(c));
-    console.log(parseFloat(c));
-    console.log(typeof c, typeof d);
-    console.log(a + b);
-    console.log(c + parseInt(d));
+    console.log(c.toFixed(1));    toFixed ->dice cuantos numeros DECIMALES va a tener el numero.  //7.2
+    console.log(c.toFixed(5));                                                                    //7.19000
+    console.log(parseInt(c));     parseInt ->el metodo devuelve la parte entera del numero        //7
+    console.log(parseFloat(c));   parseFloat ->devuelve la parte entera y la parte decimal de un numero   //7.19
+    console.log(typeof c, typeof d);    type of ->te dice que tipo de dato es la variable  //number string
+    console.log(a + b);           //3
+    console.log(c + parseInt(d));       ->para hacer la suma de numero mas cadena de texto que es un numero, le coloco
+    el parseInt, pero en este caso suma la parte entera unicamente; abajo utilizamos parseFloat por el cual me hace la suma correctamente (7.19 + '5.6') osea suma el numero mas la cadena de texto que es un numero, suma la parte 
+    entera y la parte decimal.
     console.log(c + parseFloat(d));
-    console.log(c + Number.parseInt(d));
+    esta es otra forma de hacerlo, poner el Number adelante del parse:
+    console.log(c + Number.parseInt(d));    
     console.log(c + Number.parseFloat(d)); */
 
 
@@ -185,7 +194,7 @@
     let f = Boolean(false);
 
     console.log(verdadero, falso, v, f);
-    console.log(typeof verdadero, typeof falso);
+    console.log(typeof verdadero, typeof falso);   -> te dice que es un tipo de dato Boolean(booleano)
     console.log(Boolean(0));
     console.log(Boolean(-7));
     console.log(Boolean(""));
@@ -223,9 +232,9 @@
     */
 
     //Declaración de función
-    /*  function estoEsUnaFuncion() {
+    /*  function estoEsUnaFuncion() {             ->empieza la funcion
        console.log("Uno");
-       console.log("Dos");
+       console.log("Dos");                        ->lo que esta entre llaves({}) es el codigo a ejecutarse
        console.log("Tres");
      } */
 
@@ -245,8 +254,13 @@
 
     //let valorDeFuncion = unaFuncionQueDevuelveValor();
 
-    //console.log(valorDeFuncion);
+    //console.log(valorDeFuncion);    //Uno  19
 
+    /*en la funcion unaFuncionQueDevuelveValor ->cuando el interprete encuentre la palabra reservada RETURN, 
+    automaticamente deja de leer las lineas de codigo que estan debajo de esa palabra reservada, por ese motivo
+    cuando hago el console.log(valorDeFuncion) me devuelve Uno 19, porque despues de retornar el 19, no lee las
+    otras lineas de codigo, las ignora.
+    */
     /*  function saludar(nombre = "Desconocido", edad = 0) {
        console.log(`Hola mi nombre es ${nombre} y tengo ${edad} años.`);
      } */
@@ -256,17 +270,21 @@
 
     //Funciones declaradas VS funciones expresadas
 
-    //funcionDeclarada();
+    /*funcionDeclarada();  ->si yo invoco la funcion declarativa antes de su definicion, no pasa nada, me invoca la 
+    funcion igualmente, a eso le llamamos HOISTING(como que 'sube' la funcion arriba de la invocacion, lo hace 
+    automaticamente JS), en resumen no importa donde invoque la funcion porque el interprete la va invocar igual */
 
     /* function funcionDeclarada() {
       console.log("Esto es un función declarada, puede invocarse en cualquier parte de nuestro código, incluso antes de que la función sea declarada");
     } */
 
-    //funcionDeclarada();
+    /*funcionDeclarada();
+    */
+    /*funcionExpresada();  ->si yo invoco la funcion anonima o expresiva antes de su definicion me va tirar un error,
+    por lo tanto no puedo invocarla en cualquier lugar o antes de declarar la funcion porque me tira un error('no 
+    puedes invocar la funcion porque no fue declarada, porque la estas invocando antes de su inicializacion')
 
-    //funcionExpresada();
-
-    //función anónima
+    //función anónima (no tiene nombre) o funcion expresada(la estamos asignando como valor a una variable)
     /* const funcionExpresada = function () {
       console.log("Esto es una función expresada, es decir, una función que se le ha asignado como valor a una variable, si invocamos esta función antes de su definición JS nos dirá 'Cannot access 'funcionExpresada' before initialization'")
     } */
@@ -290,13 +308,17 @@
         console.log(b[3][2]);
         console.log(b[3][3][0]);
 
-        const c = Array.of("X", "Y", "Z", 9, 8, 7);
-        console.log(c);
+        const c = Array.of("X", "Y", "Z", 9, 8, 7);  
 
-        const d = Array(100).fill(false);
+        const d = Array(100).fill(false);      ->Array(n).fill('algo') donde n quiere decir cuantas posiciones tiene 
+        el arreglo y lo que esta adentro de fill quiere decir el tipo de dato q va contener ese arreglo. En este caso hice un arreglo de 100 posiciones que tengan el valor booleano false.
+
         console.log(d);
 
-        const e = new Array();
+        const e = new Array();      ->la palabra reservada new es un operador, que me va permitir crear un objeto
+        nuevo de un cierto tipo de dato, en este caso como le colocamos Array, me va crear un arreglo
+
+        console.log(c);
         console.log(e);
 
         const f = new Array(1, 2, 3, true, false);
@@ -305,15 +327,24 @@
         const colores = ["Rojo", "Verde", "Azul"];
         console.log(colores);
 
-        colores.push("Negro");
+        colores.push("Negro");     ->push agrega al final del arreglo el valor negro(en este caso) al arreglo colores
         console.log(colores);
 
-        colores.pop();
+        colores.pop();             ->pop elimina el ultimo elemento de arreglo colores
         console.log(colores);
 
         colores.forEach(function (el, index) {
           console.log(`<li id="${index}">${el}</li>`);
-        }); */
+        });                                                 
+
+        el forEach nos permite ejecutar una funcion por cada uno de los elementos que tenga el arreglo. Por ejemplo
+        en este ejemplo el significa elemento, mientras que index es el numero de indice del elemento. Con el forEach
+        lo que hacemos en si es recorrer el elemento. El resultado seria: 
+        <li id="0">Rojo</li>
+        <li id="1">Verde</li>
+        <li id="2">Azul</li>
+        
+        */
 
 
 
@@ -327,10 +358,14 @@
     const b = {}
     console.log(b);
 
-    const c = new Object();
+    const c = new Object(); la palabra reservada new es un operador, que me va permitir crear un objeto nuevo de un
+    cierto tipo de dato, en este caso como le colocamos el prototipo Object, me va crear un objeto
     console.log(c);
  */
-    /* dentro de un objeto a las variables se le van a llamar atributos/propiedades y a las funciones se les llama métodos */
+    /* un objeto es una coleccion de llaves:valores(key:value) y se separan con acento.Puede contener cualquier tipo 
+    de dato.
+     dentro de un objeto a las variables se le van a llamar atributos/propiedades(nombrem apellido, edad, pasatiempos,
+     soltero,contacto) y a las funciones se les llama métodos(saludar, decirMiNombre) */
     /*     const jon = {
           nombre: "Jon",
           apellido: "MirCha",
@@ -346,28 +381,31 @@
             console.log(`Hola :)`)
           },
           decirMiNombre: function () {
-            console.log(`Hola me llamo ${this.nombre} ${this.apellido} y tengo ${this.edad} años y me puedes seguir como ${this.contacto.twitter} en twitter.`)
+            console.log(`Hola me llamo ${this.nombre} ${this.apellido} y tengo ${this.edad} años y me puedes seguir como ${this.contacto.twitter} en twitter.`)   //this hace referencia al objeto donde se esta trabajando,
+            por ejemplo si ponemos this.nombre, si nombre cambia, en la funcion tambien cambia
           }
         }
-
-        console.log(jon);
-        console.log(jon["nombre"]);
-        console.log(jon["apellido"]);
-        console.log(jon.nombre);
-        console.log(jon.apellido);
-        console.log(jon.edad);
+             ACCEDIENDO AL OBJETO: con corchete o con punto(es la forma mas utilizada y se recomienda utilizar punto)
+        console.log(jon);    //imprime todos elementos del objeto
+        console.log(jon["nombre"]);    //accedo con corchete,imprime el nombre
+        console.log(jon["apellido"]);  //accedo con corchete, imprime el apellido
+        console.log(jon.nombre);       //accedo con punto, imprime el nombre
+        console.log(jon.apellido);     //accedo con punto, imprime apellido
+        console.log(jon.edad);      
         console.log(jon.soltero);
-        console.log(jon.pasatiempos);
-        console.log(jon.pasatiempos[1]);
-        console.log(jon.contacto);
-        console.log(jon.contacto.twitter);
-        jon.saludar();
+        console.log(jon.pasatiempos);   //me va imprimir el arreglo completo
+        console.log(jon.pasatiempos[1]);    //como pasatiempos es un arreglo, accedo al arreglo con corchete e imprimo 
+        el elemento 1(hacer ejercicios)
+        console.log(jon.contacto);       //me va imprimir el objeto completo
+        console.log(jon.contacto.twitter);       //como es un objeto utlizo la forma de acceder del punto, accedo al 
+        elemento del objeto TWITTER
+        jon.saludar();   //invoco la funcion que esta dentro del objeto jon
         jon.decirMiNombre();
 
-        console.log(Object.keys(jon));
-        console.log(Object.values(jon));
-        console.log(jon.hasOwnProperty("nombre"));
-        console.log(jon.hasOwnProperty("nacimiento"));
+        console.log(Object.keys(jon));     //Object.keys imprime en un arreglo las llaves(nombre,apellido, edad, pasatiempos, soltero, contacto, saludar, decirMiNombre)
+        console.log(Object.values(jon));   //Object.values imprime en un arreglo los valores(jon,mircha,etc)
+        console.log(jon.hasOwnProperty("nombre"));   //me permite saber si un objeto tiene esa propiedad, o sea que si un objeto tiene el nombre de la propiedad que le paso; me devuelve true o false. En este caso me devuelve true
+        console.log(jon.hasOwnProperty("nacimiento"));  //false
      */
 
 
@@ -412,17 +450,20 @@
     /* Incremento Decremento */
     /* let i = 2;
 
-    console.log(i++);
-    console.log(++i); */
+    console.log(i++);   //2    pero pasa a 3
+    console.log(++i);   //4     (3 y le sumo uno)
+    */
 
-    //i = i + 2;
-    //i *= 3;
+    //i = i + 2;  //3
+    //i += 2;     //3
+    //i *=3;      //9
+
 
     //operador unario
-    /* i++;
-    i--;
-    ++i;
-    --i;
+    /* i++;    cuando vamos de uno en uno, suma uno
+    i--;       cuando vamos de uno en uno, restamos uno
+    ++i;       es lo mismo pero cambia la posicion de los signos
+    --i;       es lo mismo pero cambia la posicion de los signos
     console.log(i); */
 
     /*
