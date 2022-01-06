@@ -542,6 +542,9 @@
 
     /* Operador Ternario (condición) ? verdadero : falsa */
     /*  console.log("Operador Ternario");
+
+    podemos poner todo junto (condicion,verdadero y falso) o ser mas ordenado y dejarlo en
+    lineas separadas:
      let eresMayor = (edad >= 18)
        ? "Eres mayor de Edad"
        : "Eres menor de Edad";
@@ -585,6 +588,11 @@
         console.log("El día no existe");
         break;
     }
+    el break le quiere decir al lenguaje de programacion que cuando este en un caso y lea todo el codigo y si no se 
+    cumple el caso, que salga de ese caso y pase al siguiente. Si omitimos el break el switch lee directamente todos los casos
+    el default quiere decir que si no se cumple ninguno de esos casos, o sea que el caso sea uno particular
+    y no corresponda a los casos de arriba, entonces correra esa linea de codigo(por ejemplo se va a imprimir
+    el dia no existe)
  */
 
 
@@ -600,11 +608,29 @@
        contador++;
      }
 
+     mientras(while) contador sea menor que 10, imprime while + contador, y para que no sea un loop infinito
+     (o sea que contador no valga 0 siempre e imprima while 0 infinitamente) vamos a incrementar el contador a 1.
+     Entonces queria : while 0, while 1, while 2, while 3, while 4, while 4, while 5, while 6, while 7, 
+     while 8, while 9, y en el momento que llegaria el while 10 la condicion no se cumple, por lo tanto no entra.
+     En resumen, lo que hace el while es que primero se fija si cumple la condicion y luego ejecuta el codigo
+     que esta dentro.
 
      do {
        console.log("do while " + contador);
        contador++;
-     } while (contador < 10); */
+     } while (contador < 10); 
+     
+     el do while lo que hace es primero ejecutar el codigo (console.log...) y luego se fija que cumpla la condicion
+     en este caso el ejemplo quedaria:  do while 0, do while..., do while 9.
+     La diferencia con el while es que si por ejemplo nosotros cambiamos el contador a 10, en el do while se va 
+     a imprimir POR LO MENOS UNA VEZ (quedaria do while 10), en cambio con el while como primero se fija si se 
+     cumple la condicion por lo tanto como la condicion no se cumple, entonces no se imprime nada.
+     EN RESUMEN con do while siempre se va imprimir por lo menos una vez ya que analiza la condicion luego de 
+     ejecutar el codigo, y con while no se va imprimir si no se cumple la condicion, ya que primero analiza
+     la condicion y luego ejecuta el codigo.
+     
+     
+     */
 
     /* for (inicialización de variable; condición; decremento o incremento) {
       sentencias que ejecuta el for
@@ -614,12 +640,33 @@
 
     /* for (let i = 0; i < 10; i++) {
       console.log("for " + i);
-    }
+    }                              //for 0, for 2, for 3, for 4, for 5, for 6, for 7, for 8, for 9
 
     let numeros = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100];
 
     for (let i = 0; i < numeros.length; i++) {
       console.log(numeros[i]);
+    }                               //10, 20, 30, 40, 50, 60, 70, 80, 90, 100
+
+    esto sirve para RECORRER arreglos(como el forEach)
+    En este caso puse que la i sea menor que el largo del arreglo, por lo tanto va imprimir todos los elementos del
+    arreglo, en cambio si ponia que i<5  se iba a imprimir: 10, 20, 30, 40, 50 (de la posicion 0 a la 4, ya que la
+    posicion 5 no cumple con la condicion, o sea que la posicion 5 es igual a 5 y no menor que 5)
+
+    FORIN, FOROF: La diferencia de los dos es que for in nos permite recorrer solamente las propiedades de un 
+    objeto, en cambio con el for of me va permitir recorrer todos los elementos de cualquier objeto que sea 
+    iterable en JS(arreglos, cadenas de texto)
+
+
+    -FOR IN  
+     for (const key in object) {
+        
+      }
+    }
+
+    -FOR OF ->
+    for (const iterator of object) {
+      
     }
 
     const jon = {
@@ -629,17 +676,32 @@
     }
 
     for (const propiedad in jon) {
+      console.log(propiedad);
+    }         //vamos a recorrer las propiedades del objeto JON,va imprimir las propiedades, por lo tanto
+    lo que imprime es: nombre, apellido, edad (solo los nombres de las propiedades) lo que me permite recorrer
+    o iterar todas las propiedades del objeto jon.
+
+
+    for (const propiedad in jon) {
       console.log(`Key: ${propiedad}, Value: ${jon[propiedad]}`);
-    }
+    }        //vamos a recorrer las propiedades del objeto JON, y en este caso lo que hago es imprimir las 
+    propiedades y los valores de dichas propiedades. En el objeto jon, imprimir la propiedad como lo hicimos 
+    anteriormente, al momento de imprimir el valor tengo dos opciones jon.propiedad o jon[propiedad]. En este caso 
+    vamos a utlizar la opcion de los corchetes ya que cuando trabajamos con el for in y utlizamos el punto nos va 
+    salir undefined en ves del valor, en cambio si utlizamos corchetes salen los valores.
+    Lo que imprime es: Key:nombre ,Value:"Jon" ; Key:apellido ,Value:·MirCha"  Key:edad ,Value: 35
+
 
     for (const elemento of numeros) {
       console.log(elemento);
-    }
+    }          //aca vamos a recorrer los elementos del arreglo NUMEROS, por lo que imprime los elementos del
+    arreglo de numeros. Lo que imprime es: 10,20,30,40,50,60,70,80,90,100
 
     let cadena = "Hola Mundo";
 
     for (const caracter of cadena) {
-      console.log(caracter);
+      console.log(caracter);   //aca vamos a recorrer los caracteres de la varible cadena, me va imprimir los 
+      caracteres incluyendo los espacio. Lo que imprime es: H,o,l,a, ,M,u,n,d,o
     } */
 
 
@@ -677,22 +739,37 @@
 
     /* **********     Curso JavaScript: 17. break & continue - #jonmircha     ********** */
 
-    /* const numeros = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0];
+    /*
+    BREAK Y CONTINUE -> nos ayudan a controlar el flujo de nuestras estructuras de control, por ejemplo cuando
+    necesitamos romper,saltar o salirnos de la estructura, etc.
+    
+    const numeros = [0, 1, 2, 3, 4, 5, 16, 7, 8, 9, 0];
 
-    for (let i = 0; i < numeros.length; i++) {
-      if (i === 5) {
+    for (let i = 0; i < numeros.length; i++) {       
+      if (i === 5) {          
         break;
       }
       console.log(numeros[i]);
     }
+    
+    En el ejemplo del break quiere decir que recorriendo el array numeros, cuando se cumpla la condicion se salga 
+    del for. En este caso lo que hace es cuando se cumpla i=5 (o sea cuando i llege a la posicion 5), se salga
+    del for, o sea se sale, se rompe la estructura en la que esta(el for). Lo que se va imprimir es: 0,1,2,3,4
+
 
     for (let i = 0; i < numeros.length; i++) {
-      if (i === 5) {
+      if (i === 6) {
         continue;
       }
       console.log(numeros[i]);
-    } */
-
+    } 
+    
+    
+    En el ejemplo del continue, recorre el array numeros y cuando i este en la posicion 6(i=6) salta la 
+    posicion 5. Lo que se va imprimir es 0,1,2,3,4,5,7,8,9,0 (la posicion 6=16 no se va a imprimir, porque la 
+    salteo, la omito)
+    
+    */
 
 
 
