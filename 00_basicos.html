@@ -709,15 +709,40 @@
 
     /* **********     Curso JavaScript: 16. Manejo de Errores - #jonmircha     ********** */
     /*  try {
-       console.log("En el Try se agrega el código a evaluar");
+       console.log("En el Try se agrega el código a evaluar");     aca se pone el cod a evaluar
        noExiste;
        console.log("Segundo mensaje en el try");
      } catch (error) {
-       console.log("Catch, captura cualquier error surgido o lanzado en el try");
-       console.log(error);
+       console.log("Catch, captura cualquier error surgido o lanzado en el try");  si el cod a evaluar tiene un error 
+       se imprime lo q esta dentro del console.log
+       console.log(error); (con esta opcion puedo hacer que me imprima el error en la consola)
      } finally {
        console.log("El bloque finally se ejecutará siempre al final de unbloque try-catch");
      }
+
+     el codigo quedaria(primero se imprime el primer conselo.log, luego se imprime catch q encontro un error, luego se 
+     imprime que error encontro, y finalmente se imprime el finally; el segundo console.log no se imprime ya que
+     antes de ese console.log esta el error, y cuando la consola encuentra ese error todo lo que esta abajo no se
+     evalua):
+     -En el Try se agrega el codigo a evaluar (porque no hay error en el console.log)
+     -Catch, captura cualquier error surgido o lanzado en el try(porque llame una variable que no esta declarada 
+     noExiste, por lo tanto hay un error y el catch captura el error)
+     -Reference error: noExiste is not defined ...
+     -El bloque finally se ejecutara siempre al final de unbloque try-catch (el bloque finally siempre se va ejecutar)
+
+     Cuando el Catch detecta el error(en este caso la variable no declarada) todo el codigo que esta debajo de ese
+     error no se lee directamente. Por ejemplo si ponemos la variable debajo de 'Segundo mensaje en el try' el 
+     codigo que se imprime en la consola seria diferente:
+     -En el Try se agrega el codigo a evaluar
+     -Segundo mensaje en el try
+     -Catch, captura cualquier surgido en el try
+     -Reference error: noExiste is not defined...
+     -El bloque finally se ejecutara siempre al final de unbloque try-catch
+
+     Primero se imprimen los dos console.log, luego se imprime el catch q encontro un error, luego se imprime
+     que error encontro y finalmente se imprime el finally.
+
+
 
 
      try {
@@ -730,12 +755,20 @@
        console.log(numero * numero);
      } catch (error) {
        console.log(`Se produjo el siguiente error: ${error}`);
-     } */
-
-
-
-
-
+     } 
+     
+     En este caso lo que hacemos es comprobar que una variable tenga el tipo de dato numero, para que haga imprima
+     numero*numero. Con isNaN verificamos que lo que le pasamos por parentesis sea un numero, si es un numero devuelve true si no es un numero devuelve false, en este caso podemos personalizar que nos va a salir en caso de que
+     numero no sea un numero(personalizamos lo que va salir en el catch), ponemos la palabra reservada throw new 
+     seguida del tipo de error(error de sintaxis, error semantico, etc) si no sabemos que tipo de error vamos a 
+     utilizar simplemente defino un error general que seria Error, entonces quedaria : throw new Error + el mensaje que queremos pasarle en la consola al usuario para que sepa el error que esta cometiendo. En este caso le estamos 
+     pidiendo el tipo de dato numero. Si la variable numero= 10, en la consola me va imprimir 10*10=100, no marca 
+     errores porque 10 efectivamente en un numero. Pero como numero='y' es una string, la cual no cumple la condicion
+     y directamente catch me toma el error, por lo cual me va imprimir:
+     Se produjo el siguiente error: El caracter introducido no es un Numero.
+     
+     
+     */
     /* **********     Curso JavaScript: 17. break & continue - #jonmircha     ********** */
 
     /*
@@ -774,18 +807,32 @@
 
 
     /* **********     Curso JavaScript: 18. Destructuración - #jonmircha     ********** */
-    /* const numeros = [1, 2, 3];
+    /*
+    DESTRUCTURACION: es una nueva forma(ES6) de asignar valores sobre todo a arreglos y a objetos
+    
+    Vamos a verlo con arreglos: vamos a suponer que tengo un arreglo, y quiero guardar cada uno de los elementos
+    en diferentes variables. Tenemos dos maneras de hacer sin destructuracion y con destructuracion.
+    
+    const numeros = [1, 2, 3];
 
+    Aca lo que hacemos es guardar en variables independientes cada uno de los elementos del arreglo numeros
     //Sin destructuración
     let uno = numeros[0],
       dos = numeros[1],
       tres = numeros[2];
 
-    console.log(uno, dos, tres);
+    console.log(uno, dos, tres);     //1 2 3
 
+    Aca lo que hacemos es crear un arreglo[one, two, three], al cual le voy asignar el arreglo de numeros.
+    Lo que estoy haciendo es que yo se que numeros es un arreglo, entonces a cada una una de las
+    posiciones de ese arreglo las estoy guardando dinamicamente dentro de esas variables one,two, three
     //Con destructuración
     const [one, two, three] = numeros;
-    console.log(one, two, three);
+    console.log(one, two, three);     //1 2 3 
+
+    Vamos a verlo con objetos:
+
+    Tenemos un objeto para destructurar:
 
     const persona = {
       nombre: "Jon",
@@ -793,16 +840,40 @@
       edad: 35
     };
 
+    Aca es lo mismo que hicimos con arreglos. Creamos un objeto, dentro de ese objeto van a ir variables y le voy
+    asignar las propiedades que esten asignadas al objeto persona. De esta forma logramos la destructuracion(o sea
+    guardamos los valores de las propiedades del objeto persona en diferentes variables). En la destructuracion
+    de objetos ES IMPORTANTE que la variable se llame IGUAL que la propiedad a la cual pretendo aislar en una sola
+    variable.
+
+    let { nombre, apellido, edad } = persona;
+    console.log(nombre, apellido, edad);    // Jon MirCha 25
+
+    Vamos con el mismo ejemplo pero cambiando el orden de las variables(edad por apellido). En este caso no pasa nada
+    si invertimos las variables ya que dentro del objeto busca una propiedad que se llame igual que la varible y le 
+    asigna dicho valor.
+
     let { nombre, edad, apellido } = persona;
-    console.log(nombre, apellido, edad); */
+    console.log(nombre, apellido, edad);
+    
+     */
 
 
 
 
 
     /* **********     Curso JavaScript: 19. Objetos literales - #jonmircha     ********** */
-    /* let nombre = "kEnAi",
+    /* 
+    OBJETOS LITERALES -> una nueva forma de escribir atributos y metodos, incluso de asignarlos.
+    
+
+    Aca lo que hacemos es crear dos variables: nombre y edad
+    let nombre = "kEnAi",
       edad = 7;
+
+    Aca lo que hacemos es crear un objeto al cual le estoy asignando la propiedad nombre, y a esa propiedad nombre
+    le estoy asignando como valor la variable nombre. Le asigno la propiedad edad, a la cual le voy asignar como
+    su valor la variable edad. Y ademas tiene una funcion. ESTO ES SIN ES6
 
     const perro = {
       nombre: nombre,
@@ -812,8 +883,18 @@
       }
     }
 
-    console.log(perro);
-    perro.ladrar()
+    console.log(perro);   //{nombre: kEnAi, edad: 7, ladrar:f }
+    perro.ladrar()        //guauu guauu!!!
+
+
+    Gracias a la nueva actualizacion, ES6, JS lo que hace es "ahorrar" la escritura, es decir, yo creo un objeto
+    el cual le voy asignar una propidad que se llame nombre y el valor de esa propiedad es igual a la variable que
+    cree mas arriba que se llama nombre, entonces JS entiende que nombre: nombre y podemos directamente poner el 
+    nombre de la propiedad y la coma. Como es en el caso de nombre y edad. Si quiero crear otra propiedad y colocar
+    el valor lo hago perfectamente como es el caso de la propiedad raza. 
+    Tambien cambian los metodos: directamente ponemos el nombre de la propiedad mas los corchetes, el cual indica
+    que esa propiedad es un metodo, y abro llaves. Como ejemplo ladrar (){ cod a ejecutar }. En resumen para los
+    metodos, saco los dos puntos, saco la palabra reservada function y lo demas queda igual.
 
     const dog = {
       nombre,
@@ -824,15 +905,22 @@
       }
     }
 
-    console.log(dog);
-    dog.ladrar(); */
+    console.log(dog);    //{nombre: kEnAi, edad: 7, raza:"Callejero", ladrar: f}
+    dog.ladrar();        //guauu guauu guauu
+    
+    */
 
 
 
 
 
     /* **********     Curso JavaScript: 20. Parámetros REST & Operador Spread - #jonmircha     ********** */
-    /* function sumar(a, b, ...c) {
+    /* 
+    REST: son una forma de virtualmente ir agregando parametros infinitos(ya sea a funcion o dentro de una variable)
+    
+    
+    
+    function sumar(a, b, ...c) {
       let resultado = a + b;
 
       c.forEach(function (n) {
