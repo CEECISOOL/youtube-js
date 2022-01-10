@@ -18,18 +18,17 @@
     console.log(hello);
     console.log(window);
     console.log(window.hola);
-    console.log(window.hello); */
+    console.log(window.hello); 
     //Ambito de bloque
-    //Esto es un bloque - comentario de una lines
-    /*
+    //Esto es un bloque - comentario de una linea
     Esto
     es
     un
     comentario
     de
     varias
-    líneas */
-    /* console.log ("****************var*****************");
+    líneas 
+     console.log ("****************var*****************");
     var musica = "Rock";
     console.log("Variable Música antes del Bloque", musica);
     {
@@ -1250,13 +1249,23 @@
 
 
     /* **********     Curso JavaScript: 24. Clases - #jonmircha y Curso JavaScript: 25. Métodos estáticos, getters y setters - #jonmircha     ********** */
-    /* class Animal {
+    /*
+    Vamos a copiar la funcion costructora de Animal(la que tiene los metodos adentro de la funcion), en ves de poner 
+    function pongo class.Las clases no llevan argumento. Lo que si llevan es un metodo especial llamado constructor y 
+    es el que recibe dichos parametros.
+    Los metodos se ponen como las caracteristicas nuevas de los objetos literales, seria el nombre del metodo y
+    los parentesis, en caso de ser necesario pueden recibir parametros.
+    Las clases simplifican la escritura. Las clases son un prototipo de object. Aunque pongamos los metodos dentro
+    del constructor, los metodos aparecen dentro del prototipo(no es necesario agregar los metodos con   
+    Animal.prototype.saludar
+    
+    
+     class Animal {
       //el constructor es un método especial que se ejecuta en el momento de instanciar la clase
       constructor(nombre, genero) {
         this.nombre = nombre;
         this.genero = genero;
       }
-
       //Métodos
       sonar() {
         console.log("Hago sonidos por que estoy vivo");
@@ -1267,6 +1276,22 @@
       }
     }
 
+      const mimi= new Animal ('Mimi' , 'hembra'),
+        scooby= new Animal ('Scooby' , 'macho')
+
+      console.log(mimi);  //Animal{nombre: 'Mimi', genero: 'hembra'}
+      mimi.sonar();    //Hago sonidos por que estoy vivo
+      mimi.salunar();   //Hola me llamo Mimi
+      console.log(scooby);   // Animal{nombre: 'Scooby', genero: 'macho'}
+      scooby.sonar();   //Hago sonidos por que estoy vivo
+      scooby.saludar();   //Hola me llamo Scooby
+
+    Herencia: a la clase perro le vamos a decir que herede el prototipo Animal con una palabra reservada que se llama
+    extends. En el constructor ponemos los tres parametros: nombre, genero, tamanio. Y ahi mando a llamar a super.
+    En el anterior ejemplo, de herencia, a super lo ponia como this.super; en este caso no es necesario. Dentrp de
+    super ponemos los parametros de nombre y de genero(que vienen del padre, Animal) mientras tanto tamanio es un
+    propiedad excusiva de Perro por eso la defino dentro del constructor de perro pero fuera de la invocacion de super
+
     class Perro extends Animal {
       constructor(nombre, genero, tamanio) {
         //con el método super() se manda a llamar el constructor de la clase padre
@@ -1274,21 +1299,55 @@
         this.tamanio = tamanio;
         this.raza = null;
       }
-
+      //sobreescribi el metodo sonar
       sonar() {
         console.log("Soy un perro y mi sonido es un ladrido");
       }
-
+      
+      //genere un nuevo metodo ladrar
       ladrar() {
         console.log("Guauuu Guauuu!!!");
       }
 
-      //un método estático se pueden ejecutar sin necesidad de instanciar la clase
+
+      const scooby= new Perro ('Scooby' , 'macho' , 'gigante')
+
+      console.log(scooby);   // Animal{nombre: 'Scooby', genero: 'macho' , tamanio: 'gigante'}
+      scooby.sonar();   //Soy un perro y mi sonido es un ladrido
+      scooby.saludar();   //Hola me llamo
+      scooby.ladrar();   //Guauuu Guauuu!!!
+
+      Entonces, perro tiene su propiedad nombre, genero y tamanio. Deriva del prototipo animal. El constructor es
+      la clase Perro, y tiene el metodo sobreescrito sonar, tiene el nuevo metodo ladrar. 
+      Perro deriva de Animal y animal deriva de object, y ese Object titne el sonar original de la clase Animal, y 
+      tiene el metodo saludar. Aunque el metodo saludar no este en Perro, pero como en el prototipo perro si existe 
+      ese metodo, entonces Perro la puede utilizar.
+
+
+      
+      //un método estático es aquel que se pueden ejecutar sin necesidad de instanciar la clase. Para que un
+      metedo se vuelva estatico, al metodo le anteponemos la palabra static. Por lo tanto este es un metodo que
+      puedo ejecutarlo sin la necesidad de hbaer creado un objeto del tipo que pertenece la clase. Entonces 
+      directamente invoco el nombre de la clase (Perro.queEres();)
+
       static queEres() {
         console.log("Los perros somos animales mamíferos que pertenecemos a la familia de los caninos. Somos considerados los mejores amigos del hombre.");
       }
+      
+       Perro.queEres(); //Los perro somos animales mamiferos que pertenecemos a la familia de los caninos. Somos
+       considerados los mejores amigos del hombre.
 
-      //Los setters y getters son métodos especiales que nos permiten establecer y obtener los valores de atributos de nuestra clase
+      //Los setters y getters son métodos especiales que nos permiten establecer y obtener los valores de atributos de 
+      nuestra clase. Aca creamos un nuevo metodo, el cual queremos obtener el valor de raza de la clase Perro.
+      Para detectar que son metodos obtenedores y establecedores se le antepone el verbo. En este casi quedaria 
+      getRaza. Un metodo obtenedor va retornar el valor de la propiedad en cuestion que seria this.raza.
+      Para indicarle dentro de la clase que no es un simple metodo, sino que es un tipo de metodo obtenedor le 
+      anteponemos la palabra get y quedaria get getRaza(){}.
+      Para generar un metodo establecedor que modifique el valor de dicha propiedad definimos set, de igual manera
+      se acostumbra a anteponer el verbo entonces quedaria set setRaza. Como vamos a establecer un nuevo valor 
+      significa que va estar esperando un valor en el parametro que podria ser la raza que queremos modificar.
+      Y dentro de las llaves seria: a la propiedad raza asignarle el valor raza que esta recibiendo en el parametro.
+
       get getRaza() {
         return this.raza;
       }
@@ -1298,49 +1357,49 @@
       }
     }
 
-    Perro.queEres();
-
     const mimi = new Animal("Mimi", "Hembra"),
       scooby = new Perro("Scooby", "Macho", "Gigante");
-
-    console.log(mimi);
-    mimi.saludar();
-    mimi.sonar();
-    console.log(scooby);
-    scooby.saludar();
-    scooby.sonar();
-    scooby.ladrar();
-    console.log(scooby.getRaza);
-    scooby.setRaza = "Grán Danés";
-    console.log(scooby.getRaza); */
+    
+    Para imprimir el valor vamos a tener que hacer un console.log, lo vamos a tratar como si fuera un atributo y
+    no como un metodo
+    
+    console.log(scooby.getRaza);       //null
+    scooby.setRaza = "Grán Danés";     //se trabaja como si fuera una propiedad, no como un metodo-> scooby.setRaza('')
+    console.log(scooby.getRaza);       //Gran Danes       
+    .                                    se trabaja como si fuera una un atributo y no como un metodo->scooby.getRaza()
+    */  
 
 
 
 
 
     /* **********     Curso JavaScript: 26. Objeto console - #jonmircha     ********** */
-    /* console.log(console);
-    console.error("Esto es un error");
-    console.warn("Esto es un aviso");
-    console.info("Esto es un mensje informativo");
+    /* console.log(console);   //marca los metodos para console
+    console.error("Esto es un error");  //da un mensaje como si fuera un error, se pinta en rojo
+    console.warn("Esto es un aviso");   //da avisos, se pinta en amarillo
+    console.info("Esto es un mensje informativo");   //mensaje informativo 
     console.log("Un registro de lo que ha pasado en nuestra aplicación");
 
     let nombre = "Jon",
       apellido = "MirCha",
       edad = 35;
 
-    console.log(nombre);
-    console.log(apellido);
-    console.log(edad);
-    console.log(nombre, apellido, edad);
-    console.log(`Hola mi nombre es ${nombre} ${apellido} y tengo ${edad} años.`);
-    console.log(`Hola mi nombre es %s %s y tengo %d años.`, nombre, apellido, edad);
-    console.clear();
-    console.log(window);
-    console.log(document);
-    console.dir(window);
-    console.dir(document);
-    console.clear();
+    console.log(nombre);  //Jon
+    console.log(apellido);  //MirCha
+    console.log(edad);   //35
+    console.log(nombre, apellido, edad);   //Jon MirCha 35
+    console.log(`Hola mi nombre es ${nombre} ${apellido} y tengo ${edad} años.`); //Hola mi nombre es Jon Mircha y 
+    tengo 35 años
+    console.log(`Hola mi nombre es %s %s y tengo %d años.`, nombre, apellido, edad); //Hola mi nombre es Jon MirCha y 
+    tengo 35 años (%s significa string y %d significa digitos, luego ponemos con que reemplazamos esos signos)
+    console.clear();   //limpia todo lo que esta en la consola
+    console.log(window);  //las propiedades del objeto global window
+    console.log(document);  //document es la representacion del documento HTML a treves de JS, me muestra el archivo 
+    literalmente de HTML
+    console.dir(window); //cuando queremos ver el window representado como un objeto que podamos parsear o analizar
+    para saber todas las caracteristicas, metodos, atributos que tiene en JS
+    console.dir(document);  //uando queremos ver el document representado como un objeto que podamos parsear o analizar
+    para saber todas las caracteristicas, metodos, atributos que tiene en JS
 
     console.group("Cursos de @jonmircha en YouTube");
     console.log("Curso de JavaScript");
@@ -1350,16 +1409,18 @@
     console.log("Curso de Diseño y Programación Web");
     console.groupEnd();
 
-    console.groupCollapsed("Cursos de @jonmircha en YouTube");
+    console.groupCollapsed("Cursos de @jonmircha en YouTube");   //para agrupar, coloco los console.log abajo
     console.log("Curso de JavaScript");
     console.log("Curso de Node.js");
     console.log("Curso de PWAs");
     console.log("Curso de Flexbox");
     console.log("Curso de Diseño y Programación Web");
-    console.groupEnd();
-    console.clear();
+    console.groupEnd();  // y finalizo la agrupacion
+    
     console.log(console);
-    console.table(Object.entries(console).sort());
+    console.table(Object.entries(console).sort());   //podemos hacer tablitas, por ejemplo todo lo que estaba en
+    en cosole.log(console) que lo represente en una tabla y el sort lo puedo colocar o no, es para que este ordenado 
+    alfabeticamente
 
     const numeros = [1, 2, 3, 4, 5],
       vocales = ["a", "e", "i", "o", "u"];
@@ -1373,65 +1434,69 @@
       color: "cafe"
     }
     console.table(perro);
-    console.clear();
 
-    console.time('Cuanto tiempo tarda mi código');
+    console.time('Cuanto tiempo tarda mi código');  //para saber cuanto tiempo tarda mi codigo, inicio
     const arreglo = Array(1000000);
 
     for (let i = 0; i < arreglo.length; i++) {
       arreglo[i] = i;
     }
 
-    console.timeEnd('Cuanto tiempo tarda mi código');
-    //console.log(arreglo);
-
-    console.clear();
+    console.timeEnd('Cuanto tiempo tarda mi código');  //para ver cuanto tarda mi codigo, final
 
 
     for (let i = 0; i <= 100; i++) {
-      console.count("código for");
+      console.count("código for");    //coloca en consola las vueltas del for, osea coloca si fue la primera o ultima  vez que se ejecuta el codigo
       console.log(i);
     }
 
-    console.clear();
 
     let x = 3,
       y = 2,
       pruebaXY = "Se espera que X siempre sea menor que Y";
 
-    console.assert(x < y, { x, y, pruebaXY }); */
+    console.assert(x < y, { x, y, pruebaXY });   //como para hacer pruebas, pongo el assert, pongo la condicion,
+    pongo la x, y, el mensaje(pruebaXY). Si se cumple la condicion, no sale nada, en cambio si  no se cumple sale
+    el assertion failed
+    */
 
 
 
 
 
     /* **********     Curso JavaScript: 27. Objeto Date - #jonmircha     ********** */
-    /* console.log(Date());
+    /* console.log(Date());  //me aparece el nombre del dia, el mes, el numero del dia, el años y la hora(hh,mm,ss) y 
+    GTM - ..(uso horario)
 
-    let fecha = new Date();
-    console.log(fecha);
+    let fecha = new Date();  //guardo el date
+    console.log(fecha);   //aparece lo mismo que al principio
+
     //día del mes
-    console.log(fecha.getDate());
+    console.log(fecha.getDate()); //aparece el numero del dia
+
     //día de la semana D L M Mi J V S -> 0 1 2 3 4 5 6
-    console.log(fecha.getDay());
+    console.log(fecha.getDay());   //jueves ->4 , me aparece el numero que representa el dia
+
     //mes Ene Feb Mar Abr May Jun Jul Ago Sep Oct Nov Dic -> 0 1 2 3 4 5 6 7 8 9 10 11
-    console.log(fecha.getMonth());
-    console.log(fecha.getFullYear());
-    console.log(fecha.getHours());
-    console.log(fecha.getMinutes());
-    console.log(fecha.getSeconds());
-    console.log(fecha.getMilliseconds());
-    console.log(fecha.toString());
-    console.log(fecha.toDateString());
-    console.log(fecha.toLocaleString());
-    console.log(fecha.toLocaleDateString());
-    console.log(fecha.toLocaleTimeString());
-    console.log(fecha.getTimezoneOffset());
-    console.log(fecha.getUTCDate());
-    console.log(fecha.getUTCHours());
-    console.log(Date.now());
-    let cumpleJon = new Date(1984, 4, 23);
-    console.log(cumpleJon); */
+    console.log(fecha.getMonth());  //me parece el numero
+    console.log(fecha.getFullYear());  //me aparece el año
+    console.log(fecha.getHours());  //hora, formato de 00 a 23 horas
+    console.log(fecha.getMinutes());  //minutos, formato
+    console.log(fecha.getSeconds());  //segundos
+    console.log(fecha.getMilliseconds());  //milisegundos
+    console.log(fecha.toString());  //me da la fecha igual q las primeras dos
+    console.log(fecha.toDateString());  //me da la fecha nombre del diaa, mes, numero de dia y año
+    console.log(fecha.toLocaleString()); //me aparece de la forma dd/mm/aaa hh:mm:ss
+    console.log(fecha.toLocaleDateString()); //si solo quisieramos la parte de la fecha dd/mm/aaaa
+    console.log(fecha.toLocaleTimeString()); //si solo quisieramos la parte de la hora hh:mm:ss
+    console.log(fecha.getTimezoneOffset());  //me aparece el uso horario(basado en minutos)
+    console.log(fecha.getUTCDate());   //me dice el dia que es en el uso horario 0
+    console.log(fecha.getUTCHours());  //me dice la hora que es en el uso horario 0
+    console.log(Date.now());   //sale un numero largo, y significa cuantos segundos pasaron desde el 1ero de enero 1970
+
+    let cumpleJon = new Date(1984, 4, 23);   //para guardar una fecha
+    console.log(cumpleJon); 
+    */
 
 
 
@@ -1439,77 +1504,85 @@
 
     /* **********     Curso JavaScript: 28. Objeto Math - #jonmircha     ********** */
     /* console.log(Math);
-    console.log(Math.PI);
-    console.log(Math.abs(-7.8));
-    console.log(Math.ceil(7.2));
-    console.log(Math.floor(7.8));
-    console.log(Math.round(7.49));
-    console.log(Math.sqrt(81));
-    console.log(Math.pow(2, 5));
-    console.log(Math.sign(-0.3)); // -1 0 1
-    console.log(Math.random());
-    console.log(Math.round(Math.random() * 1000)); */
+    console.log(Math.PI);   //para imprimir el PI
+    console.log(Math.abs(-7.8));    //te devuelve el numero absoluto de un numero
+    console.log(Math.ceil(7.2));   //redondea el numero entero posterior inmediato, 8
+    console.log(Math.floor(7.8));  //redondea al numero entero menor inmediato, 7
+    console.log(Math.round(7.49));  //redondea al mas cercano inmediato, 7
+    console.log(Math.sqrt(81));  //sacar la raiz cuadrada de un numero, 9
+    console.log(Math.pow(2, 5));  //exponer un numero, el primero es la base y el segundo es el exponente, 32
+    console.log(Math.sign(-0.3)); // -1 0 1   sign me va indicar si el valor es positivo negativo o cero, -1
+    console.log(Math.random());  //me va a dar un valor aleatorio entre 0 y 1, si quiero cambiar por ej entre o y 1000 tengo que colocar Math.random()*1000   -> asi logramos q sea un numero aleatorio entre 0 y 1000
+    console.log(Math.round(Math.random() * 1000)); // 
+    */
 
 
 
 
 
     /* **********     Curso JavaScript: 29. Operador de Cortocircuito - #jonmircha     ********** */
-    /*
-    Cortocircuito OR - cuando el valor de la izquierda en la expresión siempre pueda validar a true, es el valor que se cargará por defecto
-
-    Cortocircuito AND - cuando el valor de la izquierda en la expresión siempre pueda validar a false, es el valor que se cargará por defecto
-     */
-    /*  function saludar(nombre) {
-       nombre = nombre || "Desconocido";
+    /*    
+    function saludar(nombre) {
+       nombre = nombre || "Desconocido";  //si no le pasamos el parametro, aplicamos el nombre Desconocido
        console.log(`Hola ${nombre}`);
      }
 
-     saludar("Jon");
-     saludar();
+     saludar("Jon");   //Hola Jon
+     saludar();   //Hola Desconocido
+     
+     Cortocircuito OR - cuando el valor de la izquierda en la expresión siempre pueda validar a true, es el valor que se cargará por defecto
 
-     console.log("cadena" || "Valor de la derecha");
-     console.log(19 || "Valor de la derecha");
-     console.log(true || "Valor de la derecha");
-     console.log([] || "Valor de la derecha");
-     console.log({} || "Valor de la derecha");
-     console.log(false || "Valor de la derecha");
-     console.log(null || "Valor de la derecha");
-     console.log(undefined || "Valor de la derecha");
-     console.log("" || "Valor de la derecha");
-     console.log(-2 || "Valor de la derecha");
-     console.log(0 || "Valor de la derecha");
+     Valores que tienden a verdadero
+     console.log("cadena" || "Valor de la derecha");  //cadena
+     console.log(19 || "Valor de la derecha");   //19
+     console.log(true || "Valor de la derecha");  //true
+     console.log([] || "Valor de la derecha");  //[]
+     console.log({} || "Valor de la derecha");  //{}
 
-     console.log(false && "Valor de la derecha");
-     console.log(null && "Valor de la derecha");
-     console.log(undefined && "Valor de la derecha");
-     console.log("" && "Valor de la derecha");
-     console.log(-2 && "Valor de la derecha");
-     console.log(0 && "Valor de la derecha");
+     Valores que tienen a false
+     console.log(false || "Valor de la derecha");  //Valor de la derecha
+     console.log(null || "Valor de la derecha");  //Valor de la derecha
+     console.log(undefined || "Valor de la derecha"); //Valor de la derecha
+     console.log("" || "Valor de la derecha"); //Valor de la derecha
+     console.log(-2 || "Valor de la derecha"); //-2
+     console.log(0 || "Valor de la derecha");  //Valor de la derecha
 
-     console.log("cadena" && "Valor de la derecha");
-     console.log(19 && "Valor de la derecha");
-     console.log(true && "Valor de la derecha");
-     console.log([] && "Valor de la derecha");
-     console.log({} && "Valor de la derecha"); */
+     Cortocircuito AND - cuando el valor de la izquierda en la expresión siempre pueda validar a false, es el valor que se cargará por defecto
+
+     console.log(false && "Valor de la derecha"); //false
+     console.log(null && "Valor de la derecha");  //null
+     console.log(undefined && "Valor de la derecha"); //undefined
+     console.log("" && "Valor de la derecha");  //""
+     console.log(-2 && "Valor de la derecha");  //Valor de la derecha
+     console.log(0 && "Valor de la derecha");  //0
+
+     console.log("cadena" && "Valor de la derecha");  //Valor de la derecha
+     console.log(19 && "Valor de la derecha");   //Valor de la derecha
+     console.log(true && "Valor de la derecha");  //Valor de la derecha
+     console.log([] && "Valor de la derecha");  //Valor de la derecha
+     console.log({} && "Valor de la derecha"); //Valor de la derecha
+     */
 
 
 
 
 
     /* **********     Curso JavaScript: 30. alert, confirm y prompt - #jonmircha     ********** */
-    //console.log(window);
-    //alert("Hola esto es una alerta");
-    //confirm("Hola esto es una confirmación");
-    //prompt("Hola esto es un aviso y le permite al usuario ingresar un valor");
+    /*alert, confirm y prompt son metodos para interactuar con el usuario
+    console.log(window);
+    alert("Hola esto es una alerta"); //me sale un cuadro hola esto es una alerta, con un boton de aceptar
+    confirm("Hola esto es una confirmación"); //me sale un cuadro tambien, pero con dos botones: aceptar,cancelar
+    prompt("Hola esto es un aviso y le permite al usuario ingresar un valor"); //sale un cuadro, con los dos botones 
+    de aceptar y cancelar pero tambien sale para poder poner algun valor para enviar
 
-    /* let alerta = alert("Hola esto es una alerta"),
+     let alerta = alert("Hola esto es una alerta"),
       confirmacion = confirm("Hola esto es una confirmación"),
       aviso = prompt("Hola esto es un aviso y le permite al usuario ingresar un valor");
 
-    console.log(alerta);
-    console.log(confirmacion);
-    console.log(aviso);
+    console.log(alerta);   //undefined
+    console.log(confirmacion);  //true si pongo aceptar y false si le digo cancelar
+    console.log(aviso);  //vacio si le pongo aceptar, devuelve la palabra que escribir si le pongo aceptar y devuelve
+    null si escribi algo y puse cancelar
  */
 
 
@@ -1518,58 +1591,76 @@
 
     /* **********     Curso JavaScript: 31. Expresiones Regulares - #jonmircha     ********** */
     /*
-     Expresiones Regulares
+     Expresiones Regulares(no es propio de JS)
         Son una secuencia de caracteres que forma un patrón de búsqueda, principalmente utilizada para la búsqueda de patrones de cadenas de caracteres.
 
         https://es.wikipedia.org/wiki/Expresi%C3%B3n_regular
         https://developer.mozilla.org/es/docs/Web/JavaScript/Guide/Regular_Expressions
-    */
+    
+      let cadena = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem fuga cupiditate dolores saepe, praesentium sit eaque recusandae id sapiente similique, laudantium voluptatum perferendis ea iure ad odio doloremque earum voluptate.";
 
-    /*  let cadena = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem fuga cupiditate dolores saepe, praesentium sit eaque recusandae id sapiente similique, laudantium voluptatum perferendis ea iure ad odio doloremque earum voluptate.";
+    Tenemos dos maneras de utilizar la expresion regular:
+    La primera opcion, recibe dos parametros: el primer patron que quiero buscar y el segundo parametro es la bandera. 
+    Si pusieramos solo la palabra lorem, se detendra a la primera palabra que sea lorem, si en el segundo parametro le 
+    ponemos la bandera g, quiere decir que busque todas las coincidencias.En este caso lo ponemos ig, i significa que 
+    ignore si la palabra esta en mayuscula o miniscula mientras sea la misma y g significa que busque todas las 
+    coincidencias, no solo que vea la primer coincidencia
 
-     let expReg = new RegExp("lorem", "ig");
-     console.log(expReg.test(cadena));
-     console.log(expReg.exec(cadena));
+     let expReg = new RegExp("lorem", "ig");  
+     console.log(expReg.test(cadena));  //true
+     console.log(expReg.exec(cadena)); //devuelve un arreglo con mas informacion
+
+     La segunda manera de ejecutar una expresion regular, simplemente a la expresion regular la ponemos entre barras, 
+     y para agregar las banderas directamente le colocamos la palabra ig(que tienen el mismo significado que el 
+     anterior). Despues de lorem hay un {1,} ahi le estoy generando un "rango" en este caso le estoy diciendo que 
+     lorem se puede repetir indefinidamente, sino {1,3} con esto le estoy diciendo que lorem se puede repetir del 
+     hasta 3
 
      let expReg2 = /lorem{1,}/ig;
-     console.log(expReg2.test(cadena));
-     console.log(expReg2.exec(cadena)); */
+     console.log(expReg2.test(cadena));// true
+     console.log(expReg2.exec(cadena)); //devuelve un arreglo con mas informacion
+     
+     Para que JS valide la expresion regular, utilizamos dos metodos(hay mas metodos): el metodo test y el metodo 
+     exec*/
 
 
 
 
 
     /* **********     Curso JavaScript: 32. Funciones Anónimas Autoejecutables - #jonmircha     ********** */
-    /*    //Función Anónima Autoejecutables
+    /*   Función Anónima Autoejecutables ->significa que es una funcion en la cual englobamos todo el codigo que 
+        queremos ejecutar.Nos van a permitir poder pasar parametros y utilizar alias dentro del cuerpo de nuestra
+        funcion
+
        (function () {
          console.log("Mi primer IIFE");
-       })();
+       })();  //en este si hay que poner punto y coma si o si para separar el codigo
 
        (function (d, w, c) {
          console.log("Mi segunda IIFE");
-         console.log(d);
-         console.log(w);
-         c.log("Este es un console.log")
-       })(document, window, console);
+         console.log(d);  //Document
+         console.log(w);  //window
+         c.log("Este es un console.log")  //Este es un console.log
+       })(document, window, console);  //estoy pasando el objeto document en la variable d o sea se lo estoy asignando al primer paramtro, window al segundo parametro y finalmente console al tercer parametros
 
 
-       //Formas de escribir las funciones Anónimas Autoejecutables
-       //Clásica
+       Formas de escribir las funciones Anónimas Autoejecutables
+       //Clásica ->la misma que la anterior
        (function () {
          console.log('versión Clásica')
        })();
 
-       //La Crockford (JavaScript The Good Parts)
+       //La Crockford (JavaScript The Good Parts) ->el mismo formato clasico pero lo unico que cambia es que esta agrupando todo con un parentesis de mas
        ((function () {
          console.log('versión Crockford')
        })());
 
-       //Unaria
+       //Unaria ->no hay necesidad de encapsular la funcion en un parentesis porque lo reemplazamos por el signo de mas, que lo ayuda a ejecutarse
        +function () {
          console.log('versión Unaria')
        }();
 
-       //Facebook
+       //Facebook ->empiezo con un signo de exclamacion
        !function () {
          console.log('versión Facebook')
        }(); */
