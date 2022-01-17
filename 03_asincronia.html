@@ -12,28 +12,28 @@
   <script>
     /* **********     Curso JavaScript: 44. Temporizadores (setTimeout & setInterval) - #jonmircha     ********** */
 
-    /* console.log("inicio");
+    /* 
 
     setTimeout(() => {
       console.log("Ejecutando un setTimeout, esto se ejecuta una sóla vez");
-    }, 3000);
+    }, 3000); //ese console.log se va estar ejecutando una sola vez despues de ese periodo de tiempo que le colocamos(3000=tres segundos)
 
     setInterval(() => {
       console.log("Ejecutando un setInterval, esto se ejecuta indefinidaente cada cierto intervalo de tiempo");
-    }, 1000); */
+    }, 1000);   //con el setInterval el console.log que va ejecutando infinitas veces cada 1 segundo(1000= un segundo)
 
-    /* let temporizador = setTimeout(() => {
+     let temporizador = setTimeout(() => {
       console.log(new Date().toLocaleTimeString());
-    }, 1000);
+    }, 1000);   // aca se tendria que ejecutar al menos una vez, pero como abajo ejecuto la limpieza del Timeout, nunca se va imprimir en pantalla
 
     clearTimeout(temporizador);
-    console.log("después del clearTimeout"); */
+    console.log("después del clearTimeout"); //para ver como funciona el clear
 
-    /* let temporizador = setInterval(() => {
+     let temporizador = setInterval(() => {
       console.log(new Date().toLocaleTimeString());
-    }, 1000);
+    }, 1000); //aca me va imprimiendo cada un segundo la hora(como habiamos visto hh:mm:ss)
 
-    clearInterval(temporizador);
+    clearInterval(temporizador); //si ponemos esto abajo de temporizador, nunca se va a imprimir el temporizador
     console.log("después del clearInterval"); */
 
 
@@ -44,17 +44,17 @@
 
     /*  Antes de explicar como funciona el modelo de JavaScript es importante entender algunos conceptos:
 
-     Procesamiento Single thread y Multi thread.
-     Operaciones de CPU y Operaciones de I / O.
-     Operaciones Concurrentes y Paralelas.
-     Operaciones Bloqueantes y No Bloqueantes.
-     Operaciones Síncronas y Asíncronas.
+     -Procesamiento Single thread y Multi thread. JS tiene un solo hilo de ejecucion(single thread)
+     -Operaciones de CPU(son las que van a pasar el mayo tiempo consumiendo los procesos de nuestra cpu por ejemplo el for infinito) y Operaciones de I / O(I=entrada, O=salida; son las que van a pasar la mayor parte del tiempo esperando la peticion del recurso que hay solicitado). En JS podemos ejecutar ambas pero en la mayoria de los casos por las caracteristicas del lenguaje, JS se va a comportar haciendo operaciones de I/O.
+     -Operaciones Concurrentes(cuando dos o mas tareas progresan simultaneamente, es decir se estan ejecutan al mismo tiempo pero puede ser que una empezo antes o despues y ahi van avanzando simultaneamente) y Paralelas(es cuando dos o mas tareas se ejecutan al mismo tiempo, es decir corren al mismo tiempo)
+     -Operaciones Bloqueantes y No Bloqueantes.Si una operacion es bloqueante o no bloqueante se va referir a la fase de espera, siempre va haber una fase de espera cada vez que se va ejecutando una operacion de nuestro codigo entonces si una operacion es bloqueante o no se va referir a como toma esa fase de espera. Una operacion bloqueante es aquella que no va devolver el control a la aplicacion hasta que haya terminado toda su tarea. No bloqueante significa que las operaciones se ejecutan y devuelven inmediatamente el control al hilo principal, no importa si han terminado o no la tarea.
+     -Operaciones Síncronas y Asíncronas.Lo sincrono y asincrono se refiere cuando tendra lugar la respuesta. Pensando en pasado, presente y futuro sincrono significa que la respuesta sucede en el presente o sea en el tiempo inmediato, una operacion sincrona espera el resultado en tiempo presente y sigue a otra operacion.Mientras que asincrono la respuesta sucede en un futuro, o sea se ejecuta pero no sabe cuando va venir la respuesta, es decir la operacion asincrona no va a esperar el resultado, es por eso que suelta inmediatamente el control y se lo regresa al hilo principal.
 
      Javascript usa un modelo asíncrono y no bloqueante, con un loop de eventos implementado en un sólo hilo, (single thread) para operaciones de entrada y salida (input/output).
-     */
-
-
-    /* //Código Síncrono Bloquenate
+     
+    En Javascript vamos a tener dos tipos de codigo: 
+     
+     //Código Síncrono Bloquenate: en un codigo sincrono bloqueante cada operacion se hace de una vez bloqueando el flujo del hilo principal, este hilo queda bloqueado mientras espera la respuesta, cuando esta se procese pasa a la siguiente operacion y  asi sucesivamente hasta terminar las operaciones
     (() => {
       console.log("Código Síncrono");
       console.log("Inicio");
@@ -73,9 +73,18 @@
       console.log("Fin");
     })();
 
+    //Lo que hace aca es imprime los dos primeros console.log, luego vienen dos funciones, luego invoca la funcion uno, la funcion uno tien un console.log Uno, y tiene ademas la invocacion de la funcion dos, que imprime el console.log Dos, y finalmente imprime la ultima linea de codigo de la funcion uno, que seria Tres. Despues de que se hacen esas tres operaciones sincronas y bloqueantes (console.log('Uno'), dos(), console.log('tres')), la invocacion del uno libera el hilo y finalmente podemos ejecutar el console.log Fin.
+    Expliquemos que es lo que hace cuando se invoca la funcion uno. Cuando la funcion uno se invoca, se mantiene la funcion uno(), mientras funcion uno esta ahi, hace el console.log de Uno, sale esa console.log y entra la funcion dos(), hay un console.log Dos, sale ese console.log y sale la funcion dos(), luego viene la ultima linea de codigo, entra el console.log Tres, y sale; finalmente sale la funcion uno(). Por eso se llama first in last out, es una pila(stack) el primero que entra es el ultimo que sale.
+    Codigo Sincrono
+    Inicio
+    Uno
+    Dos
+    Tres
+    Fin
+
     console.log("********************");
 
-    //Código Asíncrono No Bloquenate
+    //Código Asíncrono No Bloquenate: el setTimeout es un signo de asincronismo
     (() => {
       console.log("Código Asíncrono");
       console.log("Inicio");
@@ -96,7 +105,17 @@
 
       uno();
       console.log("Fin");
-    })(); */
+    })(); 
+    
+    Lo que pasa acaa es que imprime los dos primeros console.log(Codigo  Asincrono  Inicio), luego viene la invocacion de la funcion de uno().Aca lo que pasa es que primero tenemos un setTimeout que esta en 0, aunque este en 0 directamente ese console.log Uno va a pasar a la fila de tareas, por lo tanto va a seguir con el codigo y luego lo imprime. Despues de ese setTimeout viene la invocacion de la funcion dos(), en esa funcion tenemos otro setTimeout, pero en este tenemos la duracion en 1segundo(1000), por lo tanto ese console.log Dod tambien pasa a la fila de tareas. Finalmente en la funcion uno tenemos el console.log de Tres, luego tenemos el ultimo console.log Fin. Cuando finaliza todo ahi se va a ejecutar la fila de tareas, primero viene el del console.log Uno, luego de un segundo viene el console,log Dos.
+    Expliquemos lo que hace cuando ejecuta uno.Cuando se invoca la funcion uno, se mantiene en la funcion uno(), mientras que la funcion uno esta ahi entra el setTimeout, lo que hace en ese momento es correr el setTimeout en la parte de Web Apis(o sea como tarea) y luego se pasa a las colas de callbacks(digamos que paso ahi, que dice que se esta ejecutando una operacion en segundo plano, digamos de manera asincrona y que cuando termine devolvera el resultado a la pila principal).Luego de eso entra en la funcion dos(), la invoca pero como tiene un setTimeout va a generar otra llamada asincrona, es decir me la va a poner en Web Apis, y me va generar otra peticion en la cola de callbacks.En resumen digamos que los dos setTimeout se guardan en la cola de callbacks. Despues la funcion uno entra en el console.log de tres y sale. Finalmente la funcion uno sale.Y luego se hace el console.log Fin.Como ya terminamos todas esas peticiones bloqueantes sube el primer setTimeout, imprime Uno, sale el primer setTimeout; despues entra el segundo setTimeout, imprime dos y vuelve a salir el setTimeout y listo. Ahi tenemos el porque uno y dos se ejecutaron hasta el final.
+    Codigo Asincrono
+    Inicio
+    Tres
+    Fin
+    Uno
+    Dos
+    */
 
 
 
@@ -104,12 +123,19 @@
 
     /* **********     Curso JavaScript: 46. Callbacks - #jonmircha     ********** */
 
-    /* function cuadradoCallback(value, callback) {
+    /* 
+    Para trabajar la asincronia JS tiene diferentes mecanismos, el primero de ellos es una callback.
+    Una callback es una funcion que se va ejecutar despues de que otra lo haga. Es el mecanismo por excelencia que tiene JS para invocar incluso algunas de sus funciones 
+
+
+    function cuadradoCallback(value, callback) {  //value=un valor  , callback=funcion a ejecutar
       setTimeout(() => {
-        callback(value, value * value);
+        callback(value, value * value);   //cb va a recibir un valor(value) y la funcion que va ejecutar es la multiplicacion del valor al cuadradro 
       }, 0 | Math.random() * 1000);
     }
-
+    
+   Invocando Callback:Aca tenemos dentro de un callback tenemos otro callback y así sucesivamente.En este tipo de callbakcs podriamos tener problemas donde tenemos que esperar que dos o más eventos terminen para continuar la ejecución de nuestro código. Si bien podemos resolverlo sin problemas con callbacks, vamos a ver que nuestro código empieza a hacerce díficil de leer, muy díficil de controlar si hay errores (no sabemos qué función es la que realmente produjo el error). Terminamos dentro del callback hell(piramide del infierno).
+   
     cuadradoCallback(0, (value, result) => {
       console.log("Inicia Callback");
       console.log(`Callback: ${value}, ${result}`);
@@ -139,7 +165,17 @@
 
     /* **********     Curso JavaScript: 47. Promesas - #jonmircha     ********** */
 
-    /*     function cuadradoPromise(value) {
+    /*    Para resolver los de la piramide del infierno y lo del manejo de errores JS tiene un mecanismo que se llaman las promesas, las promesas van a trabajar con dos recursos principales: el resolve y reject. 
+    Una promesa la podemos ver como un if else, si la promesa se cumple, es decir si accedemos al recurso pensando en que estamos haciendo la peticion a una API o si se realiza el proceso que estamos pretendiendo, entonces la promesa se cumple y se ejecutaria el resolve; si la promesa por alguna razon falla, entonces va a ejecutar el reject.Para ver las promesas vamos a utilizar la misma funcion de elevar al cuadrado. Esta la funcion, y lo que va retornar esa funcion es una nueva promesa que ahi dentro va estar nuestras instruccion de codigo a ejecutar(el setTimeout). EL promise tiene dos partes la parte que resuelve(resolve) y la parte que rechaza(reject).Adentro de la arrow function ejecutamos el resolve, que es como el return positivo de la promesa en caso de que se cumpla y el reject es el negativo. Bueno en la parte del resolve formamos un objeto que tenga una propiedad y valor que es value(es el que el usuario me va pasar) y otra propiedad result que va tener value*value y asi facilmente simplificamos ese callbackhell.
+
+    Las promesas se trabajan simplemente ejecutando la funcion que se llama cuadradoPromise(0), que es el primer numero.
+    Cuando tenemos una funcion que devuelve una promesa tenemos dos metodos para ir trabajando la asincronia: el metdodo then es el siguien bloque que se va ejecutar una vez que se cumpla la funcion inicial, podemos tener tantos metodos then que necesitemos, al final de todos esos metodos then vamos a tener otro metodo que se llama catch y es el que va capturar el error resultante del reject. El punto y coma va cuando finaliza el catch ya que para JS todo eso es una sola ejecucion.
+
+    
+
+    Si tengo solo una funcion asincrona conviene trabajar con callback, nos conviene usar promesas cuando tenemos concanetacion de varios procesos asincronos
+    
+    function cuadradoPromise(value) {
           if (typeof value !== "number") {
             return Promise.reject(`Error, el valor " ${value} " ingresado no es un número`);
           }
@@ -153,10 +189,15 @@
             }, 0 | Math.random() * 1000);
           });
         }
+        
+        
+    Va ejecutar la funcion con el valor en 0, entra, ejecuta el setTimeout para simular la sincronia y como en este caso es exitoso devuelve un objeto con el valor y el resultado. El then va a recibir la parte positiva de la promesa es decir el resolve, o sea el objeto. Aca lo que hacemos es invocamos la funcion en 0, en la parte del then imprimimos un console.log Inicio Promise, luego imprimimos Promise: +el valor que le pasamos +el resultado, y finalmente lo que hacemos es concatenar otro proceso asincronico, o sea retornamos la funcion cuadradoPromise pasandole como valor 1. Creamos otro then que imprime Promise: +valor que le pasamos +resultado. Y finalmente retornamos la funcion cuadradoPromise y le pasamos el valor 3,eso lo vamos a repetir hasta el numero 5. Finalmente, hacemos el then que imprima Promise: +valor que le pasamos a la funcion(osea el 5) y el valor del resultado(5*5=25)
+    y finalmente imprimimos 'Fin Promise'. En el catch podemos recibir un error, que puede ser un objeto un mensaje etc, en este caso lo mandamo a un console.error que imprima el error que me esta mandando la promesa. En las callbacks para detectar un error tenia que hacer en cada una de las callbacks.Aca lo que hacemos es: por ejemplo, si el usuario no pasa un value que no es un numero, ahi habria un error, entonces en la funcion le colocamos un if donde colocamos que si el tipo de dato de value es diferente a numero, entonces retorna la promesa + el reject(Promise.reject)  y mandamos un mensaje de texto que diga Error el valor "value" ingresado  no es un numero. Por lo tanto si hay un error, no se va a ejecutar el then, directamente pasa al catch, por lo tanto me imprime un cartel en rojo(por el console.error) Por ejemplo si pongo cuadradoPromise('0')//Error, el valor '0' ingresado no es un numero. Directamente paso al error, ahora si ponemos return cuadradoPromise('4') va a iniciar la promesa, hasta llegar al 4 que es donde detecta el error y va dejar de ejecutar las demas promesas y salta directamente al catch, o sea finaliza ahi, con el error.
+
 
         cuadradoPromise(0)
           .then(obj => {
-            //console.log(obj);
+            //console.log(obj);   //{value: 0 , result:0}    esta imprimiendo el obj, que es el return positivo
             console.log('Inicio Promise');
             console.log(`Promise: ${obj.value}, ${obj.result}`);
             return cuadradoPromise(1);
@@ -181,15 +222,28 @@
             console.log(`Promise: ${obj.value}, ${obj.result}`);
             console.log('Fin Promise');
           })
-          .catch(err => console.error(err)); */
+          .catch(err => console.error(err)); 
 
+          //Inicio Promise
+          Promise: 0,0
+          Promise: 1,1
+          Promise: 2,4
+          Promise: 3,9
+          Promise: 4,16
+          Promise: 5,25
+          Fin Promise
+          
 
-
+*/
 
 
     /* **********     Curso JavaScript: 48. Async - Await - #jonmircha     ********** */
 
-    /* function cuadradoPromise(value) {
+    /*Las funciones asincronas van a esperar a que algo se cumpla para poder seguir ejecutando el proceso.
+    Las promesas vinieron a reemplazar hasta cierto punto a las callback, pero las funciones asincronas no vienen a reemplazar a las promesas sino que trabajan en conjunto.
+    Copiamos la funcion cuadradoPromise de la clase anterior:
+    
+    function cuadradoPromise(value) {
       if (typeof value !== "number") {
         return Promise.reject(`Error, el valor " ${value} " ingresado no es un número`);
       }
@@ -203,6 +257,13 @@
         }, 0 | Math.random() * 1000);
       });
     }
+    
+
+    La manera de decirle a Js que la funcion es asincrona es anteponiendole la palabra reservada async. Vamos a ver dos ejemplos una con funcion declarada y otra con funcion expresada.
+    Adentro de la funcion puedo empezar a trabajar las peticiones asincronas que generalmente van a ser dadas de una promesa. Para el manejo de errores nos conviene trabajar con un bloque try-catch. En el bloque try imprimimos Inicio Async Function, declaramos una variable que se llama obj(porque la funcion cuadradoPromise devuelve un objecto) y a esa variable le decimos que va a ejecutar una funcion cuadradoPromise con el value 0; luego vamos a imprimir un mensaje, para que me imprima el numero + el resultado. Como obj es una varible puedo cambiar el flujo de su valor, y le decimos que una vez que se ejecute y me muestre el numero y el valor del resultato la variable obj va ser igual a la funcion cuadradoPromise y con el value 1 y que luego imprima Async Function: el valor mas el resultado. Eso lo repetimos hasta el numero 5. Aca es muy importante poner la palabra await cuando declaramos la variable, o sea quedaria await cuadradoPromise, ya que si no colocamos esa palabra la funcion cuadradoPromise(1) no va esperar a cuadradoPromise(0), se va a ejecutar de manera automatica y en la consola me va salir el valor y el resultado como undefined. La palabra await le dice a JS que tiene que esperar el resultado de la ejecucion con el valor en 0 antes de pasar a la siguiente linea, entonces cuando tiene esos valores imprime esos valores correspondientes. Finalmente cuando llega al numero 5, colocamos un console.log que diga Fin Async Function. Este mecanismo me evita tener concatenado varios then, el codigo se puede leer mejor.
+    Con el tema de los errores, es lo mismo que vimos anteriormente: Si el tipo de valor que le pasos es diferente a numero retorna el error, por ej si le pasamos '3' va a ejecutar el codigo del 0 hasta el 2 y luego deja de ejecutarse el codigo y muestra el error gracias a la estructura try-catch
+
+    La optimizacion a nivel de sintaxis es que al trabajar con funciones asincronas cada peticion la puedo guardar en una variable y estar evitando hacer uso de then
 
     async function funcionAsincronaDeclarada() {
       try {
@@ -232,7 +293,16 @@
       }
     }
 
-    funcionAsincronaDeclarada();
+    funcionAsincronaDeclarada();  //Inicio Async Function
+    Async Function: 0, 0
+    Async Function: 1, 1
+    Async Function: 2, 4
+    Async Function: 3, 9
+    Async Function: 4, 16
+    Async Function: 5, 25
+    Fin Async Function
+
+    Con la funcion expresada: a la funcion expresada la guardamos en una variable y hacemos a arrow function. Para volverla asincrona tenemos que colocar la palabra async antes de la declaracion de la arrow function. Si olvidamos colocarle la palabra async, me va salir un error donde dice que el uso de await es valido solo con async function
 
     const funcionAsincronaExpresada = async () => {
       try {
@@ -259,7 +329,8 @@
       }
     }
 
-    funcionAsincronaExpresada(); */
+    funcionAsincronaExpresada(); 
+    */
   </script>
 </body>
 

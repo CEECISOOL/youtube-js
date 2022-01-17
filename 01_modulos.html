@@ -9,8 +9,18 @@
 
 <body>
   <h1>Módulos en JavaScript</h1>
-  <script src="js/modulos.js" type="module"></script>
-  <script src="js/no-modulos.js" nomodule></script>
+  <p>Para esta clase vamos a utilizar los archivos, 01_modulos.html(este), modulos.js , no-modulos.js , constantes.js ,aritmetica.js</p>
+  <p>Una de las estupendas novedades de ES6 es la posibilidad de crear módulos, que son piezas de código que podemos escribir en ficheros independientes. Los módulos pueden tener código, como clases, funciones, objetos o simples datos primitivos, que se puede importar desde otros archivos.</p>
+  <p>Para usar modulos en el archivo HTML tenemos que colocar, en el tags de script el atributo type="module", para los navegadores que no soportan los modulos le colocamos el atributo nomodule</p>
+  <p>Con la palabra "export" consigues exponer algún miembro del módulo, para que se pueda usar desde fuera. Con la palabra "import" consigues traerte algo exportado por un módulo independiente.</p>
+  <p>Nosotros podemos tener varios archivos pero no necesariamente voy a exportar todo.Por ejemplos si en un archivo tengo la variable PI y la variable password y solo quiero exportar la palabra PI, le coloco la palabra reservada export al principio de esa variable. Y si vamos al archivo y llamamos a la variable PI y password por mas que la llame, me va aparecer un error. Porque yo elegi que Pi se exporte y pasword no, la deje como estaba.Puedo exportar solamente lo que yo quiera de un archivo a otro poniendole la palabra export, sino no le coloco nada.</p>
+  <p>Si queremos exportar funciones, podemos hacerlo como ya conocemos, anteponiendo la palabra export, pero tambien tenemos otra forma y es agrupando las funciones.Por ejemplo tenemos dos funciones, una se llama suma, recibe dos parametros a y b, y retorna la suma de a y b. La otra se llama resta, recibe dos parametros a y b y retorna la resta. Para no tener q exportar a las dos por separado, creamos un objeto que se llame aritmetica y va a tener una propiedad sumar y restar(que son las funciones) y a eso le colocamos la palabra export antes de crear el objeto.Con esto hacemos que las funciones queden dentro de un solo objeto, las agrupamos y asi finalmente exportarlas</p>
+  
+  
+  <p></p>
+  <script src="js/modulos.js" type="module"></script> <!-- hay que poner si o si el atributo type="module" porque sino
+  va salir un error -->
+  <script src="js/no-modulos.js" nomodule></script> <!-- no modulos, creamos un archivo que se llame no modulos y es para cuando los navegadores(como internet explorer) no soporten esta caracteristica. Tiene que llevar el atributo nomodule, si el navegador soporta el modulo, no aplica, pero si no soporta no lo aplica-->
 </body>
 
 </html>
