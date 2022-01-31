@@ -13,13 +13,18 @@
     /* **********     Curso JavaScript: 49. Symbols - #jonmircha     ********** */
     /* 
     Symbols es un tipo de dato primitivo, una vez que nosotros creamos un simbolo su valor se va mantener privado y para uso interno. 
-    Generalmente los symbols suelen agregarse como caracteristicas de objetos, como una propiedad y estas se van a mantener privadas. No podemos utilizar la palabra new. Los simbolos nos permiten crear identificadores de referencia
+    Generalmente los symbols suelen agregarse como caracteristicas de objetos, como una propiedad y estas se van a mantener privadas. No podemos utilizar la palabra new. Los simbolos nos permiten crear identificadores de referencia.Para diferenciar los simbolos, podemos pasarle una cadena de texto, que seria algo asi como una descripcion una etiqueta para identificar a ese tipo de dato symbol
     let id = Symbol("id");
     let id2 = Symbol("id2");
 
-    console.log(id === id2)
-    console.log(id, id2);
-    console.log(typeof id, typeof id2);
+    console.log(id === id2)  //false
+    console.log(id, id2);  //Symbol(id) Symbol(id2)
+    console.log(typeof id, typeof id2); //symbol symbol
+
+    Los simbolos suelen usarse a menudo para identificar las propiedades de objetos, para evitar colisiones entre propiedades que pudieramos escribir.
+
+    Un simbolo como es una referencia que no deberia de cambiar la podemos declarar en mayuscula.El uso mas cotidiano de los symbols es para crear propiedades privadas de los objetos para eso hay que utilizar sintaxis de corchetes [NOMBRE] con eso JS ya sabe que previamente debe existir una variable que es un simbolo y que se llama nombre y simplemente asignarle el valor(en este caso Jon).Cuando invocamos el objeto persona en la consola aparece que tiene una propiedad que es un Symbol (no sale el nombre de la propiedad).
+    Si creamos una nueva propiedad que se llama NOMBRE(igual que el symbol), no pasa nada, no afecta al symbol
 
     const NOMBRE = Symbol("nombre");
     const SALUDAR = Symbol("saludar");
@@ -28,26 +33,35 @@
       [NOMBRE]: "Jon",
       edad: 35
     };
-    console.log(persona);
+    console.log(persona); //{Symbol(nombre): 'Jon' , edad:35}
 
-    persona.NOMBRE = "Jonathan MirCha"
-    console.log(persona);
-    console.log(persona.NOMBRE);
-    console.log(persona[NOMBRE]);
+    persona.NOMBRE = "Jonathan MirCha"    //creo una propiedad con el mismo nombre que el simbolo persona
+    console.log(persona);  //{NOMBRE: 'Jonathan MirCha' , edad: 35 , Symbol(nombre): 'Jon'}
+    console.log(persona.NOMBRE); //Jonathan MirCha  ->Me va el valor de la propiedad NOMBRE
+    console.log(persona[NOMBRE]);  //Jon  ->Me va dar el valor de la referencia de ese Symbol
+
+    Como puedo crear propiedades con la notacion del punto, tambien puedo hacer propiedades que hagan referencia a un simbolo.Para eso el simbolo tiene que existir y tenemos que poner el nombre del objeto mas corchetes, entre corchetes tiene que ir el nombre del simbolo que creamos mas el igual y creamos la funcion. Para invocarla hacemos uso de la notacion del corchete.
+    ACLARACION: Si no le pusieramos la cadena de texto para identificar al simbolo, en el objeto estaria Symbol() solamente, y como en este caso si le pasamos la cadena de texto quedaria Symbol('nombre')-
 
     persona[SALUDAR] = function () {
       console.log(`Hola`);
     }
-    console.log(persona);
-    persona[SALUDAR]();
+    console.log(persona);//{NOMBRE:'Jonathan MirCha',edad:35,Symbol(nombre):'Jon',
+    Symbol (saludar): f}
+    persona[SALUDAR]();  //Hola
+
+    Recorriendo las propiedades del objeto:
 
 
     for (let propiedad in persona) {
-      console.log(propiedad);
-      console.log(persona[propiedad]);
-    }
+      console.log(propiedad);     //NOMBRE edad ->son las unicas dos propiedades que detecto porque el metodo [SALUDAR] y la propiedad [NOMBRE], como son simbolos, dentro del objeto se comportan como si fueran propiedades privadas.
+      console.log(persona[propiedad]);  //Jonathan Mircha 35
+    } 
 
-    console.log(Object.getOwnPropertySymbols(persona)); */
+    Recorriendo el objeto de manera publica no voy a ver esas dos propiedades [SALUDAR] y [NOMBRE]. Podriamos alistar esos atributos/propiedades privadas del objeto con el metodo getOwnPropertySymbols. Ponemos la palabra Object mas un punto mas la palabra getOwnPropertySymbols mas corchetes, y dentro de esos corchetes colocamos el nombre del objeto al cual queremos ver esas propiedad privadas
+
+    console.log(Object.getOwnPropertySymbols(persona)); //(2)[Symbol(nombre), Symbol(saludar)]
+     */
 
 
 
