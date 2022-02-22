@@ -68,12 +68,14 @@
 
 
     /* **********     Curso JavaScript: 50. Sets - #jonmircha     ********** */
-    /* const set = new Set([1, 2, 3, 3, 4, 5, true, false, false, {}, {}, "hola", "HOla"]);
-    console.log(set);
-    console.log(set.size);
+    /*
+    Un set podriamos decir que es un arreglo mejorado de JS que solo acepta valores unicos(hablando de valores primitivos)
+     const set = new Set([1, 2, 3, 3, 4, 5, true, false, false, {}, {}, "hola", "HOla"]);
+    console.log(set);  //1, 2, 3, 4, 5, true, false, {}, {}, "hola", "HOla" -> el numero 3 y el false APARECE SOLO UNA VEZ, el objeto JS lo toma como q cada objeto es diferente asi que aparece las dos veces
+    console.log(set.size); //para saber el tamaño de set utilizamos size no length
 
     const set2 = new Set();
-    set2.add(1);
+    set2.add(1); // agregar sets
     set2.add(2);
     set2.add(2);
     set2.add(3);
@@ -92,18 +94,19 @@
     console.log("Recorriendo set2");
     set2.forEach(item => console.log((item)));
 
+  //para acceder al set, vamos a utilizar la palabra from para que el set se comporte como un arreglo y asi poder acceder al set como lo hacemos con un arreglo. Con from estoy convirtiendo a mi tipo de dato set a un array, tiene los datos del set pero es un arreglo.
     let arr = Array.from(set);
     console.log(arr);
     console.log(arr[0]);
     console.log(arr[9]);
 
-    set.delete("HOla");
-    console.log(set);
+    set.delete("HOla"); //elimino valores
+    console.log(set); 
 
-    console.log(set.has("hola"));
+    console.log(set.has("hola"));  //comprueba si ese valor existe dentro de set, devuelve true o false
     console.log(set.has(19));
 
-    set2.clear();
+    set2.clear();  //limpiar set2
     console.log(set2); */
 
 
@@ -111,25 +114,29 @@
 
 
     /* **********     Curso JavaScript: 51. Maps - #jonmircha     ********** */
-    /* const mapa = new Map();
-    mapa.set("nombre", "Jon");
+    /* 
+    maps: Son objetos que nos sirven para almacenar conjunto de valores asociados a manera de objeto. Es como si fuera un objeto primitivo y tiene caracteristicas muy poco usables.
+    const mapa = new Map();
+    mapa.set("nombre", "Jon"); //agrego valores(la propiedad y el valor de la propiedad)
     mapa.set("apellido", "MirCha");
     mapa.set("edad", 35);
 
-    console.log(mapa);
-    console.log(mapa.size);
-    console.log(mapa.has("correo"));
-    console.log(mapa.has("nombre"));
+    console.log(mapa);  // nombre=> "Jon", apellido=> "MirCha", edad=> 35
+    Parece como una coleccion de datos
+    console.log(mapa.size); //cuantos elementos tiene
+    console.log(mapa.has("correo")); //has para saber si existe la llave o no
+    console.log(mapa.has("nombre")); //true
+    console.log(mapa.get("nombre")); // para obtener los valores(para obtener el valor de la propiedad nombre)
+    mapa.set("nombre", "Jonathan MirCha");  //modificar el nombre de mapa
     console.log(mapa.get("nombre"));
-    mapa.set("nombre", "Jonathan MirCha");
-    console.log(mapa.get("nombre"));
-    mapa.delete("apellido");
+    mapa.delete("apellido"); //eliminar apellido de mapa
 
     mapa.set(19, "diecinueve");
     mapa.set(false, "falso");
     mapa.set({}, {});
     console.log(mapa);
 
+    RECORRER MAPS
     for (let [key, value] of mapa) {
       console.log(`Llave: ${key}, Valor:${value}`);
     }
@@ -143,8 +150,8 @@
 
     console.log(mapa2);
 
-    const llavesMapa2 = [...mapa2.keys()];
-    const valoresMapa2 = [...mapa2.values()];
+    const llavesMapa2 = [...mapa2.keys()];  //guardo en un arreglo las llaves
+    const valoresMapa2 = [...mapa2.values()]; //guardo en un arreglo los valores
 
     console.log(llavesMapa2);
     console.log(valoresMapa2); */
@@ -154,44 +161,49 @@
 
 
     /* **********     Curso JavaScript: 52. WeakSets & WeakMaps - #jonmircha     ********** */
-    /* //const ws = new WeakSet([1, 2, 3, 3, 4, 5, true, false, false, {}, {}, "hola", "HOla"]);
+    /* 
+    
+    const ws = new WeakSet([1, 2, 3, 3, 4, 5, true, false, false, {}, {}, "hola", "HOla"]); //sale un error porque hay que agregar los valores de a uno, estos WeakSet aceptan valores debiles, es decir objetos.    
     const ws = new WeakSet();
 
     let valor1 = { "valor1": 1 };
     let valor2 = { "valor2": 2 };
     let valor3 = { "valor3": 3 };
 
-    ws.add(valor1);
+    ws.add(valor1); //ahora si le agrego valores(objetos), lo que le agrego es una variable la cual tiene guardado un objeto
     ws.add(valor2);
 
     console.log(ws);
+    el size no se puede, tampoco se puede iterar
 
-    console.log(ws.has(valor1));
+    console.log(ws.has(valor1)); //podemos ver si tiene el valor
     console.log(ws.has(valor3));
 
-    ws.delete(valor2);
+    ws.delete(valor2); //podemos eliminar el valor
     console.log(ws);
 
-    ws.add(valor2);
+    ws.add(valor2); //le agregamos valor
     ws.add(valor3);
     console.log(ws);
 
-    setInterval(() => console.log(ws), 1000);
+    setInterval(() => console.log(ws), 1000);  //imprimo el weaksets cada 1segundo
 
     setTimeout(() => {
       valor1 = null;
       valor2 = null;
       valor3 = null;
-    }, 5000); */
-
-    /* const wm = new WeakMap([
+    }, 5000); 
+    
+    
+     const wm = new WeakMap([
       ["nombre", "kEnAi"],
       ["edad", 7],
       ["animal", "perro"],
       [null, "nulo"]
-    ]); */
-
-    /* const wm = new WeakMap();
+    ]); 
+    
+    
+     const wm = new WeakMap();
     let llave1 = {};
     let llave2 = {};
     let llave3 = {};
@@ -256,7 +268,8 @@
 
 
     /* **********     Curso JavaScript: 54. Generators - #jonmircha     ********** */
-    /* function* iterable() {
+    /* hasta aca me quede
+     function* iterable() {
       yield "hola";
       console.log("Hola consola");
       yield "hola 2";
