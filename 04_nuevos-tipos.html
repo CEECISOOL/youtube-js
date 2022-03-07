@@ -268,9 +268,11 @@
 
 
     /* **********     Curso JavaScript: 54. Generators - #jonmircha     ********** */
-    /* hasta aca me quede
-     function* iterable() {
-      yield "hola";
+    /* Vamos a ver una sintaxis mas sencilla para generar iteradores, y estos se conocen como generadores o generators. Son una funcion que nos permite trabajar de una manera mas amigable con la interfaz de los iteradores en un elemento iterable.
+    Para que JS sepa que va ser una funcion de tipo generador hay que agregarle al lado de la palabra function un asterisco (sin espacio)
+
+     function* iterable {    //es un generador
+      yield "hola";    //es como un return 
       console.log("Hola consola");
       yield "hola 2";
       console.log("Seguimos con más instrucciones de nuestro código");
