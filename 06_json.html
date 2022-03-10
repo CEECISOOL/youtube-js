@@ -9,6 +9,7 @@
 
 <body>
   <h1>JSON JavaScript Object Notation</h1>
+  <p>JSON es un formato ligero de intercambio de datos. JSON es de fácil lectura y escritura para los usuarios</p>
   <script>
     /* **********     Curso JavaScript: 59. JSON - #jonmircha     ********** */
     /* https://www.json.org/json-es.html */
@@ -25,35 +26,40 @@
       nulo: null
     }
 
-    console.log(json);
+    console.log(json);  //{cadena: "Jon",numero: 35,booleano: true,arreglo: ["correr", "programar", "cocinar"],objeto: {twitter: "@jonmircha", email: "jonmircha@gmail.com"}, nulo: null}
 
+    /*Para convertir ese objeto json en un JSON hay que ir a la carpeta js y crear un nuevo archivo llamado datos.json. Todo archivo json tiene que empezar con apertura llaves y cierres, todas las propiedades tienen que ir con DOBLES COMILLAS no acepta la comilla simple. */
     console.log(JSON);
 
+    /*El método JSON.parse() analiza una cadena de texto como JSON, transformando opcionalmente el valor producido por el análisis. El texto que analiza JSON tiene que ser en un formato valido para JS*/
+
+    /*Parse en resumen lo que hace es analizar una cadena de texto que tenga un formato valido de JSON y convertilo en un objeto valido para JS para que lo podamos ocupar internamente en la programacion. Tambien tenemos un metodo stringify que hace totalmente lo contrario, a partir de un objeto valido en JS lo convierte en una cadena de texto. */
+
     console.log("*** JSON.parse ***");
-    console.log(JSON.parse("{}"));
-    console.log(JSON.parse("[1,2,3]"));
-    console.log(JSON.parse("true"));
-    console.log(JSON.parse("false"));
-    console.log(JSON.parse("19"));
-    console.log(JSON.parse('"Hola Mundo"'));
-    console.log(JSON.parse("null"));
-    //console.log(JSON.parse("undefined"));
+    console.log(JSON.parse("{}"));   //JSON detecta que es un objeto y lo toma como tal
+    console.log(JSON.parse("[1,2,3]")); //JSON lo detecta y convierte como un array
+    console.log(JSON.parse("true")); //JSON lo detecta y convierte como un booleano
+    console.log(JSON.parse("false")); //JSON lo detecta y convierte como un booleano
+    console.log(JSON.parse("19")); //JSON lo detecta y convierte como un numero
+    console.log(JSON.parse('"Hola Mundo"')); //JSON lo detecto como una string(porque esta escrito como string)
+    console.log(JSON.parse("null"));  //JSON lo detecto como un null
+    //console.log(JSON.parse("undefined")); //undefined no es valido 
     console.log(JSON.parse('{ "x": 2, "y": 3 }'));
 
     console.log("*** JSON.stringify ***");
-    console.log(JSON.stringify({}));
-    console.log(JSON.stringify([1, 2, 3]));
-    console.log(JSON.stringify(true));
-    console.log(JSON.stringify(false));
-    console.log(JSON.stringify(19));
-    console.log(JSON.stringify("Hola Mundo"));
-    console.log(JSON.stringify(null));
-    console.log(JSON.stringify(undefined));
-    console.log(JSON.stringify({ x: 2, y: 3 }));
+    console.log(JSON.stringify({})); //stringify convierte el objeto en cadena de texto
+    console.log(JSON.stringify([1, 2, 3]));  //stringify convierte el array en cadena de texto
+    console.log(JSON.stringify(true)); //stringify convierte el booleano en cadena de texto
+    console.log(JSON.stringify(false));//stringify convierte el booleano en cadena de texto
+    console.log(JSON.stringify(19));//stringify convierte el numero en cadena de texto
+    console.log(JSON.stringify("Hola Mundo"));//stringify convierte el string en cadena de texto(c0n las comillas y todo)
+    console.log(JSON.stringify(null));//stringify convierte el null en cadena de texto
+    console.log(JSON.stringify(undefined)); //stringify convierte el undefined en cadena de texto
+    console.log(JSON.stringify({ x: 2, y: 3 })); //el metodo stringify agarro la x y la y y le puso doble comillas, es como si fuera que a las propiedades del objeto le puso comillas, como pasar el objeto a formato JSON
 
     console.log("*** Ejemplo JSON ***");
-    console.log(JSON.stringify(json));
-    console.log(JSON.parse('{"cadena": "Jon","numero": 35, "booleano": true,"arreglo": ["correr","programar","cocinar"],"objeto": {"twitter": "@jonmircha","email": "jonmircha@gmail.com"},"nulo": null}'));
+    console.log(JSON.stringify(json));  // el metodo stringify convirtio el objeto json a formato JSON colocandole a las propiedades las dobles comillas(como vimos al principio en el archivo datos.json)
+    console.log(JSON.parse('{"cadena": "Jon","numero": 35, "booleano": true,"arreglo": ["correr","programar","cocinar"],"objeto": {"twitter": "@jonmircha","email": "jonmircha@gmail.com"},"nulo": null}'));   //El metdodo parse a la cadena de texto que esta expresada como JSON, lo detecta y convierte en un objeto
   </script>
 </body>
 

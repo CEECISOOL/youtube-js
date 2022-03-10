@@ -11,18 +11,18 @@
   <h1>this en JavaScript</h1>
   <script>
     /* **********     Curso JavaScript: 57. this - #jonmircha     ********** */
-    /* console.log(this);
+    /* console.log(this);  
         console.log(window);
         console.log(this === window);
 
         this.nombre = "Contexto Global";
-        console.log(this.nombre);
+        console.log(this.nombre);   //Contexto Global
 
         function imprimir() {
-          console.log(this.nombre);
+          console.log(this.nombre);  
         }
 
-        imprimir();
+        imprimir();   //Contexto Global
 
         const obj = {
           nombre: "Contexto Objeto",
@@ -31,15 +31,14 @@
           }
         }
 
-        obj.imprimir();
+        obj.imprimir();  //Contexto Objeto
 
         const obj2 = {
           nombre: "Contexto Objeto 2",
           imprimir
         }
 
-        obj2.imprimir();
-
+        obj2.imprimir();  //Contexto Objeto 2
         const obj3 = {
           nombre: "Contexto Objeto 3",
           imprimir: () => {
@@ -47,23 +46,23 @@
           }
         }
 
-        obj3.imprimir();
+        obj3.imprimir();  //Contexto Global   (con la arrow function no sirve el this porque no maneja su propio scope, agarra el padre del contexto donde se creo)
 
         function Persona(nombre) {
           const that = this;
           //this.nombre = nombre;
           that.nombre = nombre;
 
-          //return console.log(this.nombre);
+          //return console.log(this.nombre); //nombre
 
           //return function () {
-          //console.log(this.nombre);
+          //console.log(this.nombre);  //Comtexto Global  esta funcion anonima, como es una funcion crea un nuevo contexto, en ese contexto la palabra nombre no existe, por lo cual regresa y lee la palabra this del contexto global
           //}
 
-          //return () => console.log(this.nombre);
+          //return () => console.log(this.nombre);  //nombre  esta arrow function no crea un nuevo contexto de ejecucion por lo cual me va salir el nombre
 
           return function () {
-            console.log(that.nombre);
+            console.log(that.nombre);   //antes de las arrow function, solucionabamos ese problema con el that, that  hace referencia al this de la funcion constructora
           }
         }
 
@@ -82,18 +81,22 @@
       console.log(`${saludo} ${aQuien} desde el ${this.lugar}`);
     }
 
-    saludar("Hola", "kEnAi");
+    saludar("Hola", "kEnAi");   //Hola kEnAi desde el Contexto Global
 
     const obj = {
       lugar: "Contexto Objeto"
     }
 
-    saludar.call(obj, "Hola", "Jon");
-    saludar.call(null, "Hola", "Jon");
-    saludar.call(this, "Hola", "Jon");
-    saludar.apply(obj, ["Adios", "MirCha"]);
-    saludar.apply(null, ["Adios", "MirCha"]);
-    saludar.apply(this, ["Adios", "MirCha"]);
+    saludar.call(obj, "Hola", "Jon");   //Hola Jon desde el Contexto Objeto
+    obj significa el contexto, osea le estoy pasando como parametro el contexto al que quiero apuntar
+    saludar.call(null, "Hola", "Jon"); //Hola Jon desde el Contexto Global
+    saludar.call(this, "Hola", "Jon"); //Hola Jon desde el Contexto Global  (como estamos en el contexto global el this hace referencia al contexto global)
+    saludar.apply(obj, ["Adios", "MirCha"]);  //Adios MirCha desde el Contexto Objeto
+    apply funciona igual que call
+    saludar.apply(null, ["Adios", "MirCha"]); //Adios MirCha desde el Contexto Global
+    saludar.apply(this, ["Adios", "MirCha"]); //Adios MirCha desde el Contexto Global
+
+    bind nos permite enlazar contextos diferentes
 
     this.nombre = "Window";
 
@@ -104,13 +107,14 @@
       }
     }
 
-    persona.saludar();
+    persona.saludar(); //Hola Jon
 
     const otraPersona = {
-      saludar: persona.saludar.bind(this)
+      saludar: persona.saludar.bind(this) //esta enlazando con el this.nombre ya que es el padre
     }
 
-    otraPersona.saludar(); */
+    otraPersona.saludar(); //Hola Window
+    */
   </script>
 </body>
 

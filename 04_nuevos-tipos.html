@@ -272,7 +272,7 @@
     Para que JS sepa que va ser una funcion de tipo generador hay que agregarle al lado de la palabra function un asterisco (sin espacio)
 
      function* iterable {    //es un generador
-      yield "hola";    //es como un return 
+      yield "hola";    //es como un return, y se detiene en el yield
       console.log("Hola consola");
       yield "hola 2";
       console.log("Seguimos con más instrucciones de nuestro código");
@@ -281,18 +281,18 @@
     }
 
     let iterador = iterable();
-    //console.log(iterador.next());
-    //console.log(iterador.next());
-    //console.log(iterador.next());
-    //console.log(iterador.next());
-    //console.log(iterador.next());
+    //console.log(iterador.next()); // value: jola, done: false(significa que no termino)
+    //console.log(iterador.next());  //Hola consola    value:hola 2, done: false
+    //console.log(iterador.next());  //Seguimos con mas instrucciones de nuestro codigo  value:hola 3, done: false
+    //console.log(iterador.next()); // value: hola 4 , done: false
+    //console.log(iterador.next()); //value: undefined, done: true
 
     for (let y of iterador) {
       console.log(y);
-    }
+    }  // hola Hola consola hola2 Seguimos con más instrucciones de nuestro código hola 3 hola 4
 
-    const arr = [...iterable()];
-    console.log(arr);
+    const arr = [...iterable()];  //para cada ejecucion de iterable, cada yield vaya guardando en una posicion de este arreglo los valores que ejecuta
+    console.log(arr);  //  [hola, hola 2, hola 3, hola 4]
 
     function cuadrado(valor) {
       setTimeout(() => {
@@ -311,26 +311,38 @@
       console.log("Termina Generator");
     }
 
-    let gen = generador();
+    let gen = generador();  //Inicia Generator undefined(6) Termina Generator
 
     for (let y of gen) {
-      console.log(y);
-    } */
+      console.log(y); //Valor: 2, resultado:4
+      Valor: 3, resultado: 9
+      Valor: 4, resultado: 16
+      Valor: 0, resultado: 0
+      Valor: 5, resultado: 25
+      Valor: 1, resultado: 1
+    } 
+    Aca tenemos una sincronia no bloqueante, porque no espera que termine una funcion para seguir con la siguiente
+    */
 
 
 
 
 
     /* **********     Curso JavaScript: 55. Proxies - #jonmircha     ********** */
-    /* const persona = {
+    /* 
+    Proxies: es un nuevo mecanismo que tiene JS que te permite crear un objeto basado en un objeto literal inicial. En lugar de utilizar clases como modelo a seguir vamos a utilizar un objeto literal. Entonces el proxy va recibir un objeto literal, va generar un copia y va permitir que realicemos ciertas operaciones como por ej: validaciones de propiedades de tipos de datos dentro de la copia que se esta creando del objeto original
+    
+    
+    
+    const persona = {   //objeto base
       nombre: "",
       apellido: "",
       edad: 0
     }
 
-    const manejador = {
-      set(obj, prop, valor) {
-        if (Object.keys(obj).indexOf(prop) === -1) {
+    const manejador = {  //handler, este manejador recibe un parametro que se llama set, en ese set podemos establecer todas las validaciones 
+      set(obj, prop, valor) { 
+        if (Object.keys(obj).indexOf(prop) === -1) {  //busca que jon tenga las misma propiedades que persona(por ejemplo porsona no tiene la propiedad twitter, por lo tanto indexOf me devuelve -1 y se ejecuta el console.error)
           return console.error(`La propiedad "${prop}" no existe en el objeto persona.`);
         }
 
@@ -339,12 +351,12 @@
           !(/^[A-Za-zÑñÁáÉéÍíÓóÚúÜü\s]+$/g.test(valor))
         ) {
           return console.error(`La propiedad "${prop}"" sólo acepta letras y espacios en blanco`);
-        }
-        obj[prop] = valor;
+        }  //Si el usuario en la propiedad nombre o en la propiedad apellido, introduce numeros o simbolos (solo acepta letras de A-Z etc) me va saltar el console.error
+        obj[prop] = valor; //esto es la asignacion del valor a la propiedad del objeto copia, cuando pongo esta linea de codigo el proxy ya reconoce los valores del objeto copia que creamos abajo(sino no aparecen los valores)
       }
     }
 
-    const jon = new Proxy(persona, manejador);
+    const jon = new Proxy(persona, manejador);  //recibe un objeto del cual nos vamos a basar(persona) y recibe un handler(manejador) que tambien debe ser un objeto
     jon.nombre = "Jon";
     jon.apellido = "MirCha";
     jon.edad = 35;
@@ -358,7 +370,10 @@
 
 
     /* **********     Curso JavaScript: 56. Propiedades Dinámicas - #jonmircha     ********** */
-    /*     let aleatorio = Math.round(Math.random() * 100 + 5);
+    /*    
+     NO
+    
+     let aleatorio = Math.round(Math.random() * 100 + 5);
         const objUsuarios = {
           propiedad: "Valor",
           [`id_${aleatorio}`]: "Valor Aleatorio"
