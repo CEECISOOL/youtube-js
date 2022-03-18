@@ -332,8 +332,8 @@ document.body.appendChild($ul3); */
 
   const $cards = document.querySelector(".cards"), //guardo en una variable que apunte la clase cards
   $template = document.getElementById("template-card").content, //guardo en una variable que apunta al id template-card, guarda el contenido del template
-  $fragment = document.createDocumentFragment(),  //guardo en una variable la creacion del fragmento
-  cardsContent = [
+  $fragment = document.createDocumentFragment(),  //guardo en una variable la creacion del fragmento para que cada vez que se cree una nueva tarjeta no se este creando en el dom sino que se cree un solo fragmento que vaya almacenando dinamicamente esas tarjetas
+  cardsContent = [   //agregamos una tarjeta por cada una de las categorias que tenemos en el sitio donde sacamos las imagenes, la unica diferencia es que en el dom los titulos los tenemos en ingles y aca en español. Es un arreglo, que cada tarjeta seria un objeto con su atributo tittle y su atributo img
     {
       title: "Tecnología",
       img: "https://placeimg.com/200/200/tech",
@@ -356,16 +356,17 @@ document.body.appendChild($ul3); */
     },
   ];
 
-cardsContent.forEach((el) => {
-  $template.querySelector("img").setAttribute("src", el.img);
-  $template.querySelector("img").setAttribute("alt", el.title);
-  $template.querySelector("figcaption").textContent = el.title;
+cardsContent.forEach((el) => {   //recorrer el array, por cada elemento que trae cardsContent :
+  $template.querySelector("img").setAttribute("src", el.img); //navego por el contenido del template, en este caso dentro de template buscar img  y en su atributo src vamos a establecer el valor de el.img
+  $template.querySelector("img").setAttribute("alt", el.title); // dentro de template buscar img y en su atributo alt vamos a establecer el valor de el.title
+  $template.querySelector("figcaption").textContent = el.title;  //vamos a buscar dentro del template vamos a buscar figcaption y en la propiedad text content vamos agregar el titulo de la tarjeta(el.title)
 
-  let $clone = document.importNode($template, true);
-  $fragment.appendChild($clone);
+  let $clone = document.importNode($template, true);  //clonamos el nodo del template para que sirva con otra tarjeta
+  $fragment.appendChild($clone);  //agrego el clone al fragmento
 });
 
-$cards.appendChild($fragment); */
+$cards.appendChild($fragment);  //al elemento cards le agrego el fragmento
+ */
 /*
 
 
@@ -374,20 +375,21 @@ $cards.appendChild($fragment); */
 
 */
 /* **********     Curso JavaScript: 70. DOM: Modificando Elementos (Old Style) - #jonmircha     ********** */
-/* const $cards = document.querySelector(".cards"),
-  $newCard = document.createElement("figure"),
-  $cloneCards = $cards.cloneNode(true);
+/* const $cards = document.querySelector(".cards"),  //creamos una variable que haga referencia a nuestra clase cards
+  $newCard = document.createElement("figure"),  //creamos una nueva tarjeta, creamos el elemento figure
+  $cloneCards = $cards.cloneNode(true);  //tambien podemos clonar con el metodo cloneNode(clona todo el contenido de la variable cards)
 
-$newCard.innerHTML = `
+$newCard.innerHTML = `  
   <img src="https://placeimg.com/200/200/any" alt="Any">
   <figcaption>Any</figcaption>
-`;
-$newCard.classList.add("card");
+`;  //agrego el contenido de la tarjeta, usando la propiedad innerHTML 
+$newCard.classList.add("card");  // para que esa etiqueta figure tenga la clase card
 
-//$cards.replaceChild($newCard, $cards.children[2]);
-//$cards.removeChild($cards.lastElementChild);
-$cards.insertBefore($newCard, $cards.firstElementChild);
-document.body.appendChild($cloneCards); */
+//$cards.replaceChild($newCard, $cards.children[2]);  //replaceChild reemplaza al hijo, necesita dos parametro, el nuevo nodo y el nodod a reemplazar(accedo a los hijos de cards y reemplazo al hijo que esta en la posicion 2)
+//$cards.removeChild($cards.lastElementChild);  //metodo para eliminar, tiene como parametro el nodo que queremos eliminar, en este caso queremos eliminar el ultimo nodo de la clase cards
+$cards.insertBefore($newCard, $cards.firstElementChild);  //insertBefore nos permite insertar el nodo nuevo antes de un nodo que tomemos como referencia, necesita dos parametros el nuevo nodo y  el nodo de referencia, por ej aca insertamos la newCar antes del primer elemento hijo de la clase cards
+document.body.appendChild($cloneCards); //agregamos al final del documento html la clonacion que hicimos
+*/
 /*
 
 
@@ -397,33 +399,34 @@ document.body.appendChild($cloneCards); */
 */
 /* **********     Curso JavaScript: 71. DOM: Modificando Elementos (Cool Style) - #jonmircha     ********** */
 /*
-.insertAdjacent...
-  .insertAdjacentElement(position, el)
-  .insertAdjacentHTML(position, html)
-  .insertAdjacentText(position, text)
+.insertAdjacent...  
+  .insertAdjacentElement(position, el)//agrega un elemento(es como un appendChild o insertBefore), este metodo recibe dos parametros, la posicion y el elemento
+  .insertAdjacentHTML(position, html) //agrega contenido HTML(es como un innerHTML), este metodo recibe dos parametros, la posicion y el codigo HTML
+  .insertAdjacentText(position, text) //es como textContent,este metodo recibe dos parametros, la posicion y el contenido textual 
 
-Posiciones:
+Los tres metodos anteriores tienen estas posiciones:
   beforebegin(hermano anterior)
   afterbegin(primer hijo)
   beforeend(ultimo hijo)
   afterend(hermano siguiente)
 */
-/* const $cards = document.querySelector(".cards"),
-  $newCard = document.createElement("figure");
+/* const $cards = document.querySelector(".cards"), ///creamos una variable que haga referencia a nuestra clase cards
+  $newCard = document.createElement("figure"); //creamos una nueva tarjeta, creamos el elemento figure
 
 let $contenCard = `
   <img src="https://placeimg.com/200/200/any" alt="Any">
   <figcaption></figcaption>
-`;
-$newCard.classList.add("card");
+`; //guardo en una variable el contenido de la tarjeta
+$newCard.classList.add("card");  //// para que esa etiqueta figure tenga la clase card
 
-$newCard.insertAdjacentHTML("afterbegin", $contenCard);
-$cards.insertAdjacentElement("beforeend", $newCard);
-$newCard.querySelector("figcaption").insertAdjacentText("afterbegin", "Any"); */
-//$cards.prepend($newCard);
-//$cards.append($newCard);
-//$cards.before($newCard);
-//$cards.after($newCard);
+$newCard.insertAdjacentHTML("afterbegin", $contenCard);  //en newCard inserto elemento HTML de la variable contenCard al primer hijo
+$cards.insertAdjacentElement("beforeend", $newCard); //voy a tomar como referencia a cards y voy a insertar a newCard como ultimo hijo
+$newCard.querySelector("figcaption").insertAdjacentText("afterbegin", "Any");  //tomo como referencia newCard, busco el selecto que coincida con el selector figcaption y ahi le inserto texto
+*/
+//$cards.prepend($newCard);  //tomando como referencia cards, agrega como hijo primero al nodo newCard
+//$cards.append($newCard); //tomando como referencia cards, agrega como ultimo hijo al nodo newCard
+//$cards.before($newCard); //tomando como referencia cards, agrega como hermano anterior al nodo newCard
+//$cards.after($newCard); //tomando como referencia cards, agrega como hermano posterior al nodo newCard
 /*
 
 
@@ -439,7 +442,7 @@ Las funciones que se ejecutan en un evento se llaman Event Handler (Manejador de
 
 https://developer.mozilla.org/en-US/docs/Web/Events
 */
-/* function holaMundo() {
+/* function holaMundo() {  //es una funcion que maneja eventos, Event Handler
   alert("Hola Mundo");
   console.log(event);
 }
@@ -449,18 +452,19 @@ function saludar(nombre = "Desconocid@") {
   console.log(event);
 }
 
-const $eventoSemantico = document.getElementById("evento-semantico"),
-  $eventoMultiple = document.getElementById("evento-multiple"),
-  $eventoRemover = document.getElementById("evento-remover");
+const $eventoSemantico = document.getElementById("evento-semantico",   //guardo en una variable el id evento-semantico
+  $eventoMultiple = document.getElementById("evento-multiple"),  //    guardo en una variable el id evento-multiple
+  $eventoRemover = document.getElementById("evento-remover");   //guardo en una variable el id evento-remover
 
-$eventoSemantico.onclick = holaMundo;
-$eventoSemantico.onclick = function (e) {
+$eventoSemantico.onclick = holaMundo;  //al elemento que tenemos guardado en el id evento-semantico cuando le hacemos click se ejecuta la funcion holaMundo(sin parentesis porque si se recarga la pagina se ejecuta la funcion)
+
+$eventoSemantico.onclick = function (e) {  //piso la funcion anterior de holaMundo, osea es como si estuviera asignandole un nuevo valor ya que los eventos con manejador semantico no se permiten dos tipos de funciones
   alert("Hola Mundo Manejador de Eventos Semántico");
-  console.log(e);
+  console.log(e);  //imprime el evento, en como la linea de abajo
   console.log(event);
 };
 
-$eventoMultiple.addEventListener("click", holaMundo);
+$eventoMultiple.addEventListener("click", holaMundo);  //addEventListener es un metodo que recibe como parametro el tipo de evento que va estar esperando, y como segundo parametro una funcion callback que es la que se va ejecutar cuando dicho evento ocurra.
 $eventoMultiple.addEventListener("click", (e) => {
   alert("Hola Mundo Manejador de Eventos Múltiple");
   console.log(e);
@@ -468,19 +472,30 @@ $eventoMultiple.addEventListener("click", (e) => {
   console.log(e.target);
   console.log(event);
 });
+
+//hasta aca va a ejecutarse holaMundo, despues va ejecutarse el alert de la segunda funcion, se va imprimir el evento, se va imprimir el type del evento, se va imprimir el target del evento, y finalment se imprime el evento. Asi es como funciona el manejador de eventos multiple(van arrojar 2 alertas y 5 console.log)
+
+PASAR PARAMETROS A LOS MANEJADORES DE EVENTOS
+
 $eventoMultiple.addEventListener("click", () => {
-  saludar();
-  saludar("Jon");
+  saludar();  //se va ejecutar y me va salir un alert 'hola desconocido'+ el consolelog del evento
+  saludar("Jon");  //se va ejecutar y me va salir un alert Hola Jon y un console.log del evento
 });
 
-const removerDobleClick = (e) => {
-  alert(`Removiendo el evento de tipo ${e.type}`);
-  console.log(e);
-  $eventoRemover.removeEventListener("dblclick", removerDobleClick);
-  $eventoRemover.disabled = true;
+REMOVER EVENTOS(solo se puede hacer con el manejador de eventos multiple), para remover un manejador de eventos esta tiene  que estar guardada en una funcion ya sea declarada o expresada.
+
+const removerDobleClick = (e) => {  //recibe el evento
+  alert(`Removiendo el evento de tipo ${e.type}`);  
+  console.log(e);  //imprime el evento
+  $eventoRemover.removeEventListener("dblclick", removerDobleClick); //para remover el evento uso el metodo removeEventListerner que recibe dos parametros: el evento que voy a remover y el manejador de eventos
+  $eventoRemover.disabled = true;   //  //le agrego el atributo disabled
 };
 
-$eventoRemover.addEventListener("dblclick", removerDobleClick); */
+$eventoRemover.addEventListener("dblclick", removerDobleClick); 
+evento dblclick-> doble click en el boton
+
+Aca lo que va hacer es, en el primer doble click se va crear el alerta Removiendo el evento de tipodbclick, luego se hace un console,log del evento, luego hace el remove, entonces si yo quiero volver hacer doble click al boton, el evento se elimino
+*/
 /*
 
 
@@ -494,9 +509,9 @@ Si no se especifica el parámetro boolean, el valor por defecto es false.
   Si el boolean es falso se ejecuta la fase de burbuja (ir del elemento más interno al más externo <body>)
   Si el boolean es verdadero se ejecuta la fase de captura (ir del elemento más externo <body> al más interno)
 */
-/* const $divsEventos = document.querySelectorAll(".eventos-flujo div");
+/* const $divsEventos = document.querySelectorAll(".eventos-flujo div") //creamos una variable que me guarde todos los divs que estan en esa clase eventos-flujo;
 
-function flujoEventos(e) {
+function flujoEventos(e) {  //recibe como parametro el evento
   console.log(
     `Hola te saluda ${this.className}, el click lo originó ${e.target.className}`
   );
@@ -504,17 +519,25 @@ function flujoEventos(e) {
 
 console.log($divsEventos);
 
-$divsEventos.forEach((div) => {
+//hacemos un forEach para aplicarle a cada uno de los divs de manera dinamica un EventListener
+
+$divsEventos.forEach((div) => {  //por cada div
   //Fase de burbuja
-  //div.addEventListener("click", flujoEventos);
-  //div.addEventListener("click", flujoEventos, false);
+  //div.addEventListener("click", flujoEventos); //1*
+  //div.addEventListener("click", flujoEventos, false); //2
   //Fase de captura
-  //div.addEventListener("click", flujoEventos, true);
-  div.addEventListener("click", flujoEventos, {
-    capture: false,
-    once: true,
+  //div.addEventListener("click", flujoEventos, true);  //3*
+  div.addEventListener("click", flujoEventos, {  //
+    capture: false,  //capture hace referencia a si es fase de captura o de burbuja(en false es de burbuja)
+    once: true,  //once en true significa que el evento se va ejecutar una sola vez(como cuando utilizamos el remove), y once en false o no esta significa que el evento se va ejecutar todas las veces que hagamos click en el div
   });
-}); */
+}); 
+//Cuando el addEventListener es el 1*, lo que hace es que cuando doy click en el div 3 me sale en la consola: Hola te saluda tres, el click lo originó tres; Hola te saluda dos, el click lo originó tres; Hola te saluda uno, el click lo originó tres; eso es lo que se conoce como burbuja, porque por mas que yo solo hice click en el tres, se va imprimir para los 3 divs.
+//Cuando el addEventListener es el 2*, recibe un tercer parametro, ese parametro por defecto es false, cuando nosotros le ponemos false significa que estamos en fase de burbuja, es decir, el flujo de los eventos se propaga del mas interno al mas externo dentro del arbol del DOM. Pero si quisieramos el modelo contrario que es la FASE DE CAPTURA, van del evento mas externo al evento mas interno, entonces esos mensajes anteriores de la consola se van a invertir cambiando el valor false por el valor true(addEventListener en el 3*). Por lo tanto me va imprimir en la consola:  Hola te saluda uno, el click lo originó tres; Hola te saluda dos, el click lo originó tres; Hola te saluda tres, el click lo originó tres.
+
+//FASE DE BURBUJA: Cuando no especificamos el tercer valor, o cuando lo especificamos en false(1* y 2*)
+//FASE DE CAPTURA: Cuando esppecificamos el tercer valor en true(3*)
+*/
 /*
 
 
@@ -523,58 +546,58 @@ $divsEventos.forEach((div) => {
 
 */
 /* **********     Curso JavaScript: 75. DOM: stopPropagation & preventDefault - #jonmircha     ********** */
-/* const $divsEventos = document.querySelectorAll(".eventos-flujo div"),
-  $linkEventos = document.querySelector(".eventos-flujo a");
+/* const $divsEventos = document.querySelectorAll(".eventos-flujo div");, // creamos una variable que me guarde todos los divs que estan en esa clase eventos-flujo
+  $linkEventos = document.querySelector(".eventos-flujo a"); // creamos una variable que me guarde el primer a que esta en esa clase eventos-flujo
 
-function flujoEventos(e) {
+function flujoEventos(e) { //recibe como parametro el evento
   console.log(
     `Hola te saluda ${this.className}, el click lo originó ${e.target.className}`
   );
-  e.stopPropagation();
+  e.stopPropagation();  //es para evitar la propagacion, por ejemplo cuando damos click en el div tres que solo salga para el tres, y que cuando demos click en dos que solo salga para el dos
 }
 
 console.log($divsEventos);
 
+////hacemos un forEach para aplicarle a cada uno de los divs de manera dinamica un EventListener
+
 $divsEventos.forEach((div) => {
   //Fase de burbuja
   div.addEventListener("click", flujoEventos);
-  //div.addEventListener("click", flujoEventos, false);
-  //Fase de captura
-  //div.addEventListener("click", flujoEventos, true);
-  //div.addEventListener("click", flujoEventos, {
-    //capture: false,
-    //once: true,
-  //});
 });
 
 $linkEventos.addEventListener("click", (e) => {
   alert("Hola soy tu amigo y docente digital... Jonathan MirCha");
-  e.preventDefault();
-  e.stopPropagation();
+  e.preventDefault();  //cancela la accion que tenga por default el elemento(en este caso la accion por default es abrir el enlace, por lo tanto no abre el enlace en una nueva pestaña, solo sale el alert)
+  e.stopPropagation();  //para evitar la propagacion, osea como el link esta dentro del div tres, si presionamos el link me va ejecutar el EventListener del div tres, pero si colocamos stopPropagation eso no ocurre y solo aplica el EventListener de linkEventos
 }); */
 /*
 
 
 
-
-
 */
 /* **********     Curso JavaScript: 76. DOM: Delegación de Eventos - #jonmircha     ********** */
-/* function flujoEventos(e) {
+/* 
+
+La delegacion de eventos es una tecnica para que en lugar de tener varias EventListener, vamos a tener solo la asignacion de un EventListener al evento click al nodo principal que en este caso es el document. Ademas de mejorar el rendimiento de nuestra aplicacion a nivel de memoria y de recursos, solamente vamos a tener una asignacion al evento click y con un condicional vamos evaluando cada uno de los elementos que necesitemos aplicarle la programacion 
+1.Declaro la funcion donde asignamos el evento
+2.Hago un document.addEventListener que recibe como parametro el evento click y una funcion. 
+3.Creo las condicionales para que cuando haga click(para aplicarle programacion a ciertos elementos del document):- en el enlace de la clase eventos-flujo, no se abra; -en los divs de la clase eventos-flujo se ejecute la funcion que creamos en el paso 1
+
+function flujoEventos(e) {  //funcion donde estamos asignando el evento
   console.log(
     `Hola te saluda ${this} el click lo originó ${e.target.className}`
   );
-  //e.stopPropagation();
+  //e.stopPropagation();  //es para evitar la propagacion, por ejemplo cuando damos click en el div tres que solo salga para el tres, y que cuando demos click en dos que solo salga para el dos. Pero en este caso no lo vamos a utilizar porque no se hace ninguna propagacion porque el evento fue asignado al elemento padre que en este caso en el document
 }
 
-document.addEventListener("click", (e) => {
-  if (e.target.matches(".eventos-flujo div")) {
+document.addEventListener("click", (e) => {  //el EventListener se lo asigno al documento. Abajo vamos hacer uso de condicionales para buscar la coincidencia de algun selector y dentro de ese condicional vamos a ejecutar la programacion que necesitemos para cada elemento del DOM 
+  if (e.target.matches(".eventos-flujo div")) {   //el metodo matches sirve para buscar un selector valido, el selector valido en este caso es el que tiene el div que esta dentro de la clase eventos-flujo. El metodo .marches va validar a true cuando presione el div que esta dentro de la clase eventos-flujo, y va ejecutar la funcion flujo eventos que hace un console.log Hola te saluda ${this} el click lo originó ${e.target.className}
     flujoEventos(e);
   }
 
-  if (e.target.matches(".eventos-flujo a")) {
+  if (e.target.matches(".eventos-flujo a")) { //el metodo matches sirve para buscar un selector valido, el selector valido en este caso es el que tiene el enlace que esta dentro de la clase eventos-flujo. El metodo .matches va validar a true cuando presione el selector que esta entreparentisis, y va ejecutar el alert y el e.preventDefault
     alert("Hola soy tu amigo y docente digital... Jonathan MirCha");
-    e.preventDefault();
+    e.preventDefault();  //con este metodo no abre el link
     //e.stopPropagation();
   }
 }); */
@@ -595,32 +618,32 @@ Es un error frecuente usar load cuando DOMContentLoaded es mucho más apropiado.
 
 Peticiones asíncronas pausan el parseo del DOM.
 */
-/* window.addEventListener("resize", (e) => {
-  console.clear();
+/* window.addEventListener("resize", (e) => {  //al window le asignamos el evento resize que se van ejecutar los console.log cuando cambie el tamaño de la ventana, o sea cuando redimensiono la pantalla
+  console.clear(); //hacemos un clear(limpiar la consola) antes de cada redicionamiento
   console.log("********** Evento Resize **********");
-  console.log(window.innerWidth);
-  console.log(window.innerHeight);
-  console.log(window.outerWidth);
-  console.log(window.outerHeight);
-  console.log(e);
+  console.log(window.innerWidth);  //innerWidth va hacer referencia al tamaño del ancho del viewport de nuestra ventana
+  console.log(window.innerHeight);//innerHeight va hacer referencia al tamaño de altura del viewport de nuestra ventana
+  console.log(window.outerWidth);  //outerWidth va hacer referencia al tamaño del ancho que tiene la ventana de nuesto navegador
+  console.log(window.outerHeight);//outerHeight va hacer referencia al tamaño de altura que tiene la ventana de nuesto navegador
+  console.log(e);  //imprime el evento
 });
 
-window.addEventListener("scroll", (e) => {
-  console.clear();
+window.addEventListener("scroll", (e) => {  //window tiene un evento que es del scroll que cada vez que movamos la barra de desplazamiento va ejecutar una funcion que tiene console.log(la de abajo)
+  console.clear();//limpamos la consola(si no lo tuvieramos tendriamos un console.log de muchos eventos scroll)
   console.log("********** Evento Scroll **********");
-  console.log(window.scrollX);
-  console.log(window.scrollY);
-  console.log(e);
+  console.log(window.scrollX);  //hace referencia a la barra de desplazamiento del eje x, nos esta dando un  valor en px que significa cuanto se aleja la barra de desplazamiento horizontal del margen izquierda
+  console.log(window.scrollY);//hace referencia a la barra de desplazamiento del eje y, nos esta dando un  valor en px que significa cuanto se aleja la barra de desplazamiento vertical del margen top
+  console.log(e);  //imprime el evento
 });
 
-window.addEventListener("load", (e) => {
+window.addEventListener("load", (e) => {  //window tiene un evento load, este evento se va ejecutar cuando la ventana del navegador haya terminado de cargar
   console.log("********** Evento Load **********");
-  console.log(window.screenX);
+  console.log(window.screenX);  //
   console.log(window.screenY);
   console.log(e);
 });
 
-document.addEventListener("DOMContentLoaded", (e) => {
+document.addEventListener("DOMContentLoaded", (e) => {  //document tiene un evento DOMContentLoaded que hace que imprima los mismosm valores que window load pero el de document carga mas rapido que el de window, o sea cargo primero el documento que el window
   console.log("********** Evento DOMContentLoaded **********");
   console.log(window.screenX);
   console.log(window.screenY);
@@ -634,26 +657,28 @@ document.addEventListener("DOMContentLoaded", (e) => {
 
 */
 /* **********     Curso JavaScript: 78. BOM: Métodos - #jonmircha     ********** */
-//window.alert("Alerta");
-//window.confirm("Confirmación");
-//window.prompt("Aviso");
-/* const $btnAbrir = document.getElementById("abrir-ventana"),
+//window.alert("Alerta");  //sale una alerta
+//window.confirm("Confirmación"); //es una cajita que nos va mandar un mensaje con boton de aceptar y cancelar
+//window.prompt("Aviso");  //un mensaje de texto que puede aceptar y cancelar, el usuario puede escribir 
+
+/* const $btnAbrir = document.getElementById("abrir-ventana"),  
   $btnCerrar = document.getElementById("cerrar-ventana"),
   $btnImprimir = document.getElementById("imprimir-ventana");
 
-let ventana;
+let ventana;  //creamos una variable ventana
 
 $btnAbrir.addEventListener(
   "click",
-  (e) => (ventana = window.open("https://jonmircha.com"))
-);
+  (e) => (ventana = window.open("https://jonmircha.com")) //le da valor a la variable ventana, que abre una nueva ventana con la url que le dimos
+);  
 
 $btnCerrar.addEventListener("click", (e) => {
-  //window.close();
-  ventana.close();
+  //window.close();  //para cerrar la ventana en la que estabamos
+  ventana.close();  //para cerrar la variable ventana
 });
 
-$btnImprimir.addEventListener("click", (e) => window.print()); */
+$btnImprimir.addEventListener("click", (e) => window.print());  //abre la ventana en la que estamos para imprimirla
+ */
 /*
 
 
