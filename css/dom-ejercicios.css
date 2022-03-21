@@ -1,5 +1,5 @@
 /* **********     Reset CSS     ********** */
-:root {
+:root {  /*creo las varibles que voy a utilizar*/
   --main-font: sans-serif;
   --font-size: 16px;
   --main-color: #f7df1e;
@@ -9,29 +9,29 @@
   --container-width: 1200px;
 }
 
-html {
+html {  /*reset de html*/
   box-sizing: border-box;
   font-family: var(--main-font);
   font-size: var(--font-size);
-  scroll-behavior: smooth;
+  scroll-behavior: smooth;  /*para el scroll,para que la transicion no subita cuando vayamos yendo de una seccion a otra */
 }
 
 *,
 *:before,
 *:after {
   box-sizing: inherit;
-}
+}  /*para que los elementos del html herede el box sizing*/
 
-body {
-  margin: 0;
-  overflow-x: hidden;
+body {  /*para que sea responsivo y fluido*/
+  margin: 0;  /*reseteamos el margin a 0*/
+  overflow-x: hidden;  /*para que todo lo que se desborde en horizontal se ocute*/
 }
 
 img,
 video {
   max-width: 100%;
   height: auto;
-}
+}   /*para que las imagenes y videos se adapten a la maxima anchura de su contenedor*/
 
 .flex-row-center {
   display: flex;
@@ -42,33 +42,34 @@ video {
 /* **********     menu-hamburguesa     ********** */
 
 .header {
-  position: sticky;
+  position: sticky;  /*lo que hace es que cuando llegue a la posicion 0 en el margen de top, el header se va comportar como si estuviera fija*/
   z-index: 997;
-  top: 0;
+  top: 0;  /*es para el position*/
   padding: 1rem;
   background-color: var(--main-color);
   color: var(--second-color);
 }
 
 .header h1 {
-  margin: 0 auto;
-  text-align: center;
+  margin: 0 auto;  /*margin 0 arriba y abajo, auto a los lados*/
+  text-align: center; /*texto centrado*/
 }
 
 .section {
   padding: 2rem;
-  padding-top: 4rem;
+  padding-top: 4rem;  /*para que la cabecera que esta con sticky no se encime sobre el titulo de la seccion*/
   margin-left: auto;
   margin-right: auto;
   width: 100%;
-  max-width: var(--container-width);
-  min-height: 100vh;
+  max-width: var(--container-width);  /*max creciemiento*/
+  min-height: 100vh;  /*aunque el contenido de cada seccion  sea mas pequeño, ocupe el tamaño de viewport*/
   text-align: center;
 }
 
 .panel {
-  position: fixed;
-  z-index: 998;
+  position: fixed;  /*posiciono de manera fija*/
+  z-index: 998; /*un numero menor al que le di al panel-btn para que este sobre todos los elemento hmtl pero que este debajo del boton porque si esta por encima pierdo interactividad*/ 
+  /*con top, bottom, left y right en 0 hace que el elemento se estire en todas las direcciones, toca todos los margenes*/
   top: 0;
   bottom: 0;
   left: 0;
@@ -100,43 +101,45 @@ video {
 }
 
 .panel-btn {
-  position: fixed;
-  z-index: 999;
-  bottom: 1vh;
-  right: 1vw;
-  width: 4rem;
+  position: fixed;  /*va estar posicionado de manera fija a 1vh de bottom y right(eso significa que se va colocar en la esquina inferior derecha*/
+  z-index: 999; /*al darle un numero alto de z index, evito que cualquier elemento del html aparezca encima del boton */
+  bottom: 1vh;  /*es para position*/
+  right: 1vw;  /*es para position*/
+  width: 4rem;  /*con width y height lo estoy formando como un cuadrado, pero con el border radius le estoy dando borde redondeado*/
   height: 4rem;
   border-radius: 50%;
-  padding: 0;
-  display: flex;
+  padding: 0;  /*le saco padding*/
+  /*utilizo flex para que se centren perfectamente*/
+  display: flex;  
   justify-content: center;
   align-items: center;
   background-color: var(--main-color);
 }
 
 .menu {
-  width: inherit;
-  display: flex;
+  width: inherit;  /*que herede la anchura de su contenedor */
+  display: flex;  /*que tenga display flex en direccion columna */
   flex-direction: column;
-  justify-content: space-evenly;
-  align-items: center;
-  text-align: center;
+  justify-content: space-evenly;  /*space evenly es el que le da espaciado proporcional entre los elementos y las orillas, trabaja sobre y*/
+  /*alineo */
+  align-items: center; /*trabajo sobre x*/
+  text-align: center; /*centro el texto de menu*/
 }
 
-.menu a {
+.menu a {  /*a los enlaces que estan dentro del menu les aplico estilos*/
   padding: 2rem;
-  width: inherit;
-  display: block;
+  width: inherit;  /*que hereden la altura*/
+  display: block; /*los vuelvo elementos de bloque*/
   font-size: 1.5rem;
-  text-decoration: none;
+  text-decoration: none;  /*le saco la linea de decoracion de los enlaces*/
   color: var(--main-color);
-  transition: all 0.3s ease;
+  transition: all 0.3s ease; /*le aplico transicion para que en el estado hover no sea tan subito el cambio sino con esa transicion de 0.3 segundos*/
 }
 
-.menu a:hover {
-  font-weight: bold;
-  color: var(--second-color);
-  background-color: var(--main-modal-color);
+.menu a:hover {  /*estilos para el estado hover*/
+  font-weight: bold; /*cambio el tamaño de fuente*/
+  color: var(--second-color);  /*cambio el color de letra(cuando pase con el mouse)*/
+  background-color: var(--main-modal-color);  /*cambio el color de fondo(cuando pase con el mouse)*/
 }
 
 /* **********     Eventos del Teclado     ********** */
