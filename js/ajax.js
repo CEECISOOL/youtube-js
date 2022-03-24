@@ -52,38 +52,36 @@ PASO 2: Asignarle el o los eventos
 PASO 3: Abrir la peticion con el metodo open, estableciendo el metodo en el que lo vamos hacer y el recurso que vamos acceder
 PASO 4: Enviar la peticion con el metedo send*/
 
-/*Ahora solo vamos aprender a consumir apis, pero cuando hagamos peticiones de insercion o actualizacion de datos el metodo send puede recibir ese dato que se va modificar o actualizar, por el momento para consumir ese send va vacio*/
+/*Ahora solo vamos aprender a consumir apis, pero cuando hagamos 
+peticiones de insercion o actualizacion de datos el metodo send puede recibir ese dato que se va modificar o actualizar, por el momento para consumir ese send va vacio*/
 
 /*GET: es la peticion mas utilizada, es cuando lo hacemos atraves de la url
 POST: es cuando lo hacemos atraves de las cabeceras del documento*/
 
 /* **********     Curso JavaScript: 107. AJAX: API Fetch - #jonmircha     ********** */
 (() => {
-  const $fetch = document.getElementById("fetch"),
-    $fragment = document.createDocumentFragment();
+  const $fetch = document.getElementById("fetch"),  //creamos una variable que haga referencia a ese nodo del DOM (o sea que tenga el id fetch)
+    $fragment = document.createDocumentFragment();  //guardo en una varible la creacion del fragmento
 
   //fetch("assets/users.json")
-  fetch("https://jsonplaceholder.typicode.com/users")
+  fetch("https://jsonplaceholder.typicode.com/users")  //ejecutamos el metodo fetch, nos pide el recurso al cual va hacer referencia, en este caso es la url del API de jsonplaceholder, tambien le puedo pasar como recurso un archivo local
     /* .then((res) => {
       console.log(res);
       return res.ok ? res.json() : Promise.reject(res);
-    }) */
-    .then((res) => (res.ok ? res.json() : Promise.reject(res)))
-    .then((json) => {
-      //console.log(json);
-      //$fetch.innerHTML = json;
-      json.forEach((el) => {
-        const $li = document.createElement("li");
-        $li.innerHTML = `${el.name} -- ${el.email} -- ${el.phone}`;
-        $fragment.appendChild($li);
+    }) */  //el then ejecutaria la parte positiva si la promesa se resuelve, el catch la parte negativa. Promesa trabaja con resolve y reject(lo podemos ver como un if-else), si la promesa se cumple(si accedemos al recurso del API) se ejecuta el resolve; si la promesa por alguna razon falla se va ejecutar el reject.Then es la parte verdadera y catch es la parte falsa
+    .then((res) => (res.ok ? res.json() : Promise.reject(res)))  //hago una validacion donde si la respuesta en su parametro ok es verdadera(res.ok es true) paso al siguiente then(el que esta abajo) y convierte la respuesta en formato json, si la respuesta es falsa accedo al objeto promise y ejecuto el metodo reject para forzar a recharzar todo el objeto de la respuesta por lo que automaticamente se va ejecutar el catch(err)
+    .then((json) => {   //json son esos elementos que ya convirtio a objeto de js
+      json.forEach((el) => {   //recorremos cada uno de los elementos
+        const $li = document.createElement("li");   //creo una li para cada uno de los elementos
+        $li.innerHTML = `${el.name} -- ${el.email} -- ${el.phone}`;  ///luego ponemos en un template string para que imprima el name, email y el phone
+        $fragment.appendChild($li);  //a esa variable fragment le agregamos esa li que creamos
       });
 
-      $fetch.appendChild($fragment);
+      $fetch.appendChild($fragment);//a la variable fetch le agregamos como hijo dicho fragmento
     })
-    .catch((err) => {
-      //console.log(err);
+    .catch((err) => {  //tenemos un error personalizado
       let message = err.statusText || "Ocurrió un error";
-      $fetch.innerHTML = `Error ${err.status}: ${message}`;
+      $fetch.innerHTML = `Error ${err.status}: ${message}`;  //en el html saldria Error 404: Ocurrio un error
     })
     .finally(() => {
       //console.log("Esto se ejecutará independientemente del resultado de la Promesa Fetch")
@@ -96,26 +94,27 @@ POST: es cuando lo hacemos atraves de las cabeceras del documento*/
     $fragment = document.createDocumentFragment();
 
   async function getData() {
-    try {
-      let res = await fetch("https://jsonplaceholder.typicode.com/users"),
-        json = await res.json();
+    try {  //parte positiva
+      let res = await fetch("https://jsonplaceholder.typicode.com/users"),  //creo una variable que va hacer referencia a la peticion API con fetch
+        json = await res.json();  //esta variable es la que espera la respuesta de la variable res, y con el metodo .json la convertimos a ese tipo de dato
 
       //console.log(res, json);
 
       //if (!res.ok) throw new Error("Ocurrio un Error al solicitar los Datos");
-      if (!res.ok) throw { status: res.status, statusText: res.statusText };
+      if (!res.ok) throw { status: res.status, statusText: res.statusText };   //(el throw es como un return que envia el flujo de la programacion al catch)si de la variable res.ok es falsa(o sea si la respuesta es falsa y no se cumple), entonces va arrojar un objeto. El objeto va tener una propiedad status con el valor que venga con res,status, y va tener una propiedad statusText con el valor que venga con res.statusText
 
-      json.forEach((el) => {
-        const $li = document.createElement("li");
-        $li.innerHTML = `${el.name} -- ${el.email} -- ${el.phone}`;
-        $fragment.appendChild($li);
+      json.forEach((el) => {        //recorremos cada uno de los elementos
+        const $li = document.createElement("li");        //creo una li para cada uno de los elementos
+        $li.innerHTML = `${el.name} -- ${el.email} -- ${el.phone}`;     ///luego ponemos en un template string para que imprima el name, email y el phone
+        $fragment.appendChild($li); //a esa variable fragment le agregamos esa li que creamos
       });
 
-      $fetchAsync.appendChild($fragment);
-    } catch (err) {
+      $fetchAsync.appendChild($fragment); //a la variable fetchAsync le agregamos como hijo dicho fragmento
+
+    } catch (err) {   //manejo de error personalizado
       //console.log(err);
       let message = err.statusText || "Ocurrió un error";
-      $fetchAsync.innerHTML = `Error ${err.status}: ${message}`;
+      $fetchAsync.innerHTML = `Error ${err.status}: ${message}`;    //en el html saldria Error 404: Ocurrio un error
     } finally {
       //console.log("Esto se ejecutará independientemente del try... catch");
     }
